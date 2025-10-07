@@ -1,87 +1,178 @@
 {
-  "motion": {
-    "speed": {
-      "title": "Speed",
-      "definition": "Speed is how fast something is moving, like a cheetah chasing its lunch! It doesn't care about direction, just how quickly it's covering ground.",
-      "example": "A racing car zipping around a track at 200 km/h is showing its incredible speed.",
-      "formula": "v = d / t",
-      "formula_breakdown": [
-        {"part": "v", "description": "is the hero, Velocity (or Speed)!", "icon": "🏃‍♂️"},
-        {"part": "d", "description": "is the Distance to travel.", "icon": "🏞️"},
-        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
-      ],
-      "animation": "speed",
-      "quiz": {
-        "question": "A turtle crawls 10 meters in 2 minutes. What is its speed?",
-        "options": ["2 m/min", "5 m/min", "12 m/min", "8 m/min"],
-        "answer": "5 m/min"
-      }
+  "physics": {
+    "force_and_motion": {
+      "title": "Force & Motion",
+      "concept": "Explore how force (a push or a pull) changes an object’s motion. This is the core of Newton’s Second Law!",
+      "goal": "Understand the relationship between Force, Mass, and Acceleration (F = ma) and see how friction opposes motion.",
+      "animation": "force_and_motion",
+      "formula": "F = m × a"
     },
-    "velocity": {
-      "title": "Velocity",
-      "definition": "Velocity is speed with a mission! It's not just how fast you're going, but also *where* you're going. It's a vector, which means it has both speed and direction.",
-      "example": "A superhero flying at 800 km/h *towards the north* has a specific velocity.",
-      "formula": "v = Δx / t",
-      "formula_breakdown": [
-        {"part": "v", "description": "is our clever Velocity.", "icon": "🧭"},
-        {"part": "Δx", "description": "is Displacement (the change in position).", "icon": "📍"},
-        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
-      ],
-      "animation": "velocity",
-      "quiz": {
-        "question": "A car travels east at 40 mph and a bike travels west at 40 mph. Do they have the same velocity?",
-        "options": ["Yes, they have the same speed", "No, their directions are different", "Yes, because they are on the same road"],
-        "answer": "No, their directions are different"
-      }
+    "gravity": {
+      "title": "Gravity",
+      "concept": "Gravity is the invisible force that pulls objects toward each other. On Earth, it pulls everything down and gives objects a curved path when thrown.",
+      "goal": "Learn how gravity, launch angle, and initial power affect an object's trajectory.",
+      "animation": "gravity",
+      "formula": "g ≈ 9.8 m/s²"
     },
-    "acceleration": {
-      "title": "Acceleration",
-      "definition": "Acceleration is any change in velocity. That means speeding up, slowing down, or even just turning a corner! It's the 'vroom vroom' of physics.",
-      "example": "When a rocket blasts off, it's accelerating. When a car hits the brakes, it's also accelerating (just in a negative direction!).",
-      "formula": "a = Δv / t",
-      "formula_breakdown": [
-        {"part": "a", "description": "is the awesome Acceleration!", "icon": "🚀"},
-        {"part": "Δv", "description": "is the Change in Velocity.", "icon": "💨"},
-        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
-      ],
-      "animation": "acceleration",
-      "quiz": {
-        "question": "A rollercoaster goes from 0 to 60 mph in 3 seconds. Is it accelerating?",
-        "options": ["Only if it's going up", "No, it's just moving fast", "Yes, because its speed is changing"],
-        "answer": "Yes, because its speed is changing"
-      }
+    "energy": {
+      "title": "Energy",
+      "concept": "Energy can't be created or destroyed, only transformed! Watch it change from Potential Energy (stored, due to height) to Kinetic Energy (motion).",
+      "goal": "Visualize energy conservation and understand the trade-off between speed and height.",
+      "animation": "energy",
+      "formula": "PE + KE = Constant"
     },
     "friction": {
       "title": "Friction",
-      "definition": "Friction is a force that resists motion when two surfaces rub against each other. It's the universe's way of saying 'slow down!' and it helps us walk and stop.",
-      "example": "Rubbing your hands together to warm them up creates friction. A car's brakes use friction to stop.",
-      "formula": "Ff = μN",
-      "formula_breakdown": [
-        {"part": "Ff", "description": "is the Force of Friction.", "icon": "🤚"},
-        {"part": "μ", "description": "(mu) is how 'grippy' the surfaces are.", "icon": "✨"},
-        {"part": "N", "description": "is the Normal force (how hard they're pressed together).", "icon": "👇"}
-      ],
+      "concept": "Friction is a force that slows things down when surfaces rub against each other. It turns motion energy into heat.",
+      "goal": "See how different surface textures create more or less friction, affecting how far an object slides.",
       "animation": "friction",
+      "formula": "F_f ∝ Surface Texture"
+    },
+    "light_and_reflection": {
+      "title": "Light & Reflection",
+      "concept": "Light travels in straight lines. When it hits a shiny surface like a mirror, it bounces off at the same angle it hit.",
+      "goal": "Master the law of reflection (angle of incidence = angle of reflection) to solve puzzles.",
+      "animation": "light_and_reflection",
+      "formula": "∠i = ∠r"
+    },
+    "sound_waves": {
+      "title": "Sound Waves",
+      "concept": "Sound travels as invisible vibrations (waves) through the air. The shape of the wave determines what we hear.",
+      "goal": "Understand how frequency affects pitch (how high or low a sound is) and amplitude affects loudness.",
+      "animation": "sound_waves",
+      "formula": "Pitch ∝ Frequency"
+    },
+    "simple_machines": {
+      "title": "Simple Machines",
+      "concept": "Simple machines like levers, pulleys, and ramps make work easier by changing the direction or magnitude of a force.",
+      "goal": "Discover how to use simple machines to gain a mechanical advantage and lift heavy objects with less effort.",
+      "animation": "simple_machines",
+      "formula": "Work = Force × Distance"
+    },
+    "electricity": {
+      "title": "Electricity",
+      "concept": "Electricity is the flow of tiny particles called electrons. For them to flow, they need a complete, unbroken path called a circuit.",
+      "goal": "Learn the components of a simple circuit (power, path, load) and how to build one.",
+      "animation": "electricity",
+      "formula": "V = I × R"
+    },
+    "magnetism": {
+      "title": "Magnetism",
+      "concept": "Magnets have two poles (North and South). Opposite poles attract, while like poles repel. This creates an invisible magnetic field.",
+      "goal": "Use the forces of attraction and repulsion to navigate and understand magnetic fields.",
+      "animation": "magnetism",
+      "formula": "Opposites Attract"
+    },
+    "pressure_and_buoyancy": {
+      "title": "Pressure & Buoyancy",
+      "concept": "An object in water is pushed upward by a buoyant force. If this force is greater than the object's weight, it floats!",
+      "goal": "Explore how an object's density and shape determine whether it will sink or float (Archimedes' Principle).",
+      "animation": "pressure_and_buoyancy",
+      "formula": "F_b > Weight → Float"
+    }
+  },
+  "chemistry": {
+    "atoms": {
+      "title": "Atoms",
+      "definition": "Atoms are the tiny, fundamental building blocks of everything! Like LEGO bricks for the universe, they make up all solids, liquids, and gases.",
+      "example": "A single drop of water contains billions and billions of water molecules, and each molecule is made of hydrogen and oxygen atoms.",
+      "animation": "atom",
       "quiz": {
-        "question": "Which surface would have the MOST friction?",
-        "options": ["A sheet of ice", "A wet floor", "A sandy beach", "A polished wooden slide"],
-        "answer": "A sandy beach"
+        "question": "What are the three main particles inside an atom?",
+        "options": ["Protons, Neutrons, Electrons", "Pancakes, Noodles, Eggs", "Pebbles, Rocks, Boulders"],
+        "answer": "Protons, Neutrons, Electrons"
       }
     },
-    "newtons_first_law": {
-      "title": "Newton's First Law",
-      "definition": "An object at rest stays at rest, and an object in motion stays in motion... unless a force messes with it! It's also called the Law of Laziness (Inertia).",
-      "example": "A soccer ball won't move until you kick it. Once kicked, it would keep going forever if friction and air didn't stop it.",
-      "formula": "If ΣF=0, then v=constant",
-       "formula_breakdown": [
-        {"part": "If ΣF=0", "description": "means if all forces are balanced...", "icon": "⚖️"},
-        {"part": "then v=constant", "description": "...the velocity doesn't change!", "icon": "➡️"}
-      ],
-      "animation": "newtons_first_law",
+    "states_of_matter": {
+      "title": "States of Matter",
+      "definition": "Matter usually exists in one of three states: solid, liquid, or gas. The state depends on how much energy the atoms have and how tightly they are packed together.",
+      "example": "Ice (solid) melts into water (liquid), which can then be boiled to create steam (gas). It's all the same stuff, just in different states!",
+      "animation": "states_of_matter",
       "quiz": {
-        "question": "Why do you feel pushed forward when a bus suddenly stops?",
-        "options": ["The bus driver is magic", "Because of inertia", "The seats are bouncy"],
-        "answer": "Because of inertia"
+        "question": "If you leave an ice cream cone in the sun, it turns from a solid into a...?",
+        "options": ["Gas", "Solid", "Liquid", "Plasma"],
+        "answer": "Liquid"
+      }
+    },
+    "chemical_reactions": {
+      "title": "Chemical Reactions",
+      "definition": "A chemical reaction is a process that transforms one set of chemical substances to another. It's like a recipe where you mix ingredients to create something new!",
+      "example": "Baking a cake is a great example! You mix flour, sugar, and eggs (reactants), and after heating, you get a delicious cake (product).",
+      "animation": "chemical_reaction",
+      "quiz": {
+        "question": "What happens when you mix baking soda and vinegar?",
+        "options": ["It turns into gold", "It gets very cold", "It fizzes and creates a gas", "Nothing happens"],
+        "answer": "It fizzes and creates a gas"
+      }
+    }
+  },
+  "biology": {
+    "cells": {
+      "title": "Cells",
+      "definition": "Cells are the basic building blocks of all living things. Your body is made of trillions of them! They are like tiny rooms that perform all the jobs needed for life.",
+      "example": "Plant cells have a strong cell wall to give them structure, while animal cells are more flexible. Both have a nucleus, which is like the cell's brain.",
+      "animation": "cell",
+      "quiz": {
+        "question": "What is the 'brain' or control center of the cell called?",
+        "options": ["Mitochondria", "Nucleus", "Ribosome", "Cytoplasm"],
+        "answer": "Nucleus"
+      }
+    },
+    "photosynthesis": {
+      "title": "Photosynthesis",
+      "definition": "Photosynthesis is the amazing process where plants use sunlight, water, and carbon dioxide to create their own food (sugar) and release oxygen for us to breathe.",
+      "example": "A sunflower turning its face to the sun is soaking up energy to make its food. It's like a solar-powered chef!",
+      "animation": "photosynthesis",
+      "quiz": {
+        "question": "What do plants release during photosynthesis that is essential for humans?",
+        "options": ["Carbon Dioxide", "Water", "Sugar", "Oxygen"],
+        "answer": "Oxygen"
+      }
+    },
+    "ecosystems": {
+      "title": "Ecosystems",
+      "definition": "An ecosystem is a community of living organisms (like plants and animals) interacting with their physical environment (like the sun, soil, and water).",
+      "example": "A coral reef is a vibrant ecosystem where fish, coral, and algae all depend on each other and the warm, salty water to survive.",
+      "animation": "ecosystem",
+      "quiz": {
+        "question": "Which of these is NOT an example of an ecosystem?",
+        "options": ["A desert", "A rainforest", "A plastic bottle", "A pond"],
+        "answer": "A plastic bottle"
+      }
+    }
+  },
+  "astronomy": {
+    "solar_system": {
+      "title": "The Solar System",
+      "definition": "Our solar system is made up of the Sun and everything that orbits around it, including planets, moons, asteroids, and comets. Earth is one of eight planets!",
+      "example": "Jupiter is the largest planet in our solar system, while Mercury is the smallest. They all travel in a predictable path, or orbit, around the Sun.",
+      "animation": "solar_system",
+      "quiz": {
+        "question": "Which planet is famous for its beautiful rings?",
+        "options": ["Mars", "Saturn", "Venus", "Neptune"],
+        "answer": "Saturn"
+      }
+    },
+    "stars": {
+      "title": "Stars",
+      "definition": "Stars are giant, luminous balls of hot gas (mostly hydrogen and helium) that produce their own light and heat through nuclear fusion. Our Sun is a star!",
+      "example": "At night, we see thousands of stars from Earth, but they are all incredibly far away. The closest star to us, besides the Sun, is Proxima Centauri.",
+      "animation": "stars",
+      "quiz": {
+        "question": "What is the name of our closest star?",
+        "options": ["The Moon", "Mars", "The Sun", "Sirius"],
+        "answer": "The Sun"
+      }
+    },
+    "galaxies": {
+      "title": "Galaxies",
+      "definition": "A galaxy is a huge collection of gas, dust, and billions of stars and their solar systems, all held together by gravity. We live in the Milky Way galaxy.",
+      "example": "The Andromeda Galaxy is the nearest major galaxy to our own Milky Way. One day, billions of years from now, they are expected to collide!",
+      "animation": "galaxy",
+      "quiz": {
+        "question": "What is the name of the galaxy we live in?",
+        "options": ["Andromeda", "Triangulum", "The Milky Way", "Pinwheel"],
+        "answer": "The Milky Way"
       }
     }
   }

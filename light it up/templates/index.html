@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Playground - Learn Physics Through Play</title>
+    <title>Science Playground - Learn Through Play</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,8 +17,8 @@
         </div>
 
         <header>
-            <h1><i class="fas fa-atom"></i> Physics Playground <i class="fas fa-rocket"></i></h1>
-            <p>Discover the wonders of physics through interactive play!</p>
+            <h1><i class="fas fa-flask"></i> Science Playground <i class="fas fa-rocket"></i></h1>
+            <p>Discover the wonders of science through interactive play!</p>
         </header>
 
         <div class="screen welcome-screen active" id="welcome-screen">
@@ -36,8 +36,8 @@
                     </div>
                     
                     <div class="welcome-title">
-                        <h2>Welcome to Physics Playground!</h2>
-                        <div class="welcome-subtitle">Where Science Meets Fun!</div>
+                        <h2>Welcome to the Science Playground!</h2>
+                        <div class="welcome-subtitle">Where Curiosity Meets Fun!</div>
                     </div>
 
                     <div class="name-input-section">
@@ -58,8 +58,8 @@
                             <select id="playerGrade">
                                 <option value="1">Grade 1-2 (Beginner Explorer)</option>
                                 <option value="2">Grade 3-4 (Junior Scientist)</option>
-                                <option value="3">Grade 5-6 (Physics Adventurer)</option>
-                                <option value="4">Grade 7-8 (Master Physicist)</option>
+                                <option value="3">Grade 5-6 (Science Adventurer)</option>
+                                <option value="4">Grade 7-8 (Master Scientist)</option>
                             </select>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                     <div class="welcome-actions">
                         <button class="btn btn-primary btn-large" id="startLearning">
                             <i class="fas fa-play"></i>
-                            Start Physics Adventure
+                            Start Your Science Adventure
                         </button>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                     <div class="welcome-text">
                         <h2 id="personalizedGreeting">Welcome, Scientist!</h2>
                         <div class="typewriter-text" id="welcomeMessage">
-                            Get ready to explore the amazing world of physics!
+                            Get ready to explore the amazing world of science!
                         </div>
                     </div>
                     
@@ -140,7 +140,7 @@
                 <div class="welcome-actions">
                     <button class="btn btn-success btn-large" id="enterPlayground">
                         <i class="fas fa-play-circle"></i>
-                        Enter Physics Playground
+                        Enter the Playground
                     </button>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                 </div>
             </div>
 
-            <h2>Physics Exploration Zones</h2>
+            <h2>Science Exploration Zones</h2>
             
             <div class="progress-overview">
                 <div class="overall-progress">
@@ -185,22 +185,8 @@
                     <div class="topic-icon">
                         <i class="fas fa-running"></i>
                     </div>
-                    <h3>Motion & Forces</h3>
-                    <p>Explore how things move, speed, velocity, acceleration, and the magic of forces!</p>
-                    <div class="topic-progress">
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="progress-text">0/6 Complete</div>
-                    </div>
-                </div>
-                
-                <div class="topic-card energy" data-topic="energy">
-                    <div class="topic-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Energy & Work</h3>
-                    <p>Discover different forms of energy and how work transforms our world!</p>
+                    <h3>Physics: Explorer</h3>
+                    <p>Explore how things move, from tiny atoms to giant planets!</p>
                     <div class="topic-progress">
                         <div class="progress-container">
                             <div class="progress-bar"></div>
@@ -209,45 +195,45 @@
                     </div>
                 </div>
                 
-                <div class="topic-card electricity" data-topic="electricity">
-                    <div class="topic-icon">
-                        <i class="fas fa-bolt"></i>
+                <div class="topic-card" data-topic="chemistry" style="border-left: 5px solid #9B59B6;">
+                    <div class="topic-icon" style="color: #9B59B6;">
+                        <i class="fas fa-atom"></i>
                     </div>
-                    <h3>Electricity & Magnetism</h3>
-                    <p>Unleash the power of circuits and explore the invisible force of magnets!</p>
+                    <h3>Chemistry: Reactions</h3>
+                    <p>Mix, fizz, and bubble! Discover the secrets of chemical reactions.</p>
                     <div class="topic-progress">
                         <div class="progress-container">
                             <div class="progress-bar"></div>
                         </div>
-                        <div class="progress-text">0/5 Complete</div>
+                        <div class="progress-text">0/3 Complete</div>
                     </div>
                 </div>
                 
-                <div class="topic-card matter" data-topic="matter">
-                    <div class="topic-icon">
-                        <i class="fas fa-vial"></i>
+                <div class="topic-card" data-topic="biology" style="border-left: 5px solid #2ECC71;">
+                    <div class="topic-icon" style="color: #2ECC71;">
+                        <i class="fas fa-leaf"></i>
                     </div>
-                    <h3>Matter & Its States</h3>
-                    <p>Dive into the world of atoms, molecules, and the states of matter!</p>
+                    <h3>Biology: Life Science</h3>
+                    <p>From tiny cells to vast ecosystems, explore the wonders of life.</p>
                     <div class="topic-progress">
                         <div class="progress-container">
                             <div class="progress-bar"></div>
                         </div>
-                        <div class="progress-text">0/7 Complete</div>
+                        <div class="progress-text">0/3 Complete</div>
                     </div>
                 </div>
                 
-                <div class="topic-card waves" data-topic="waves">
-                    <div class="topic-icon">
-                        <i class="fas fa-water"></i>
+                <div class="topic-card" data-topic="astronomy" style="border-left: 5px solid #3498DB;">
+                    <div class="topic-icon" style="color: #3498DB;">
+                        <i class="fas fa-meteor"></i>
                     </div>
-                    <h3>Waves & Sound</h3>
-                    <p>Ride the waves of sound and light and discover how they travel!</p>
+                    <h3>Astronomy: Space</h3>
+                    <p>Blast off to explore stars, planets, and mysterious galaxies far, far away.</p>
                     <div class="topic-progress">
                         <div class="progress-container">
                             <div class="progress-bar"></div>
                         </div>
-                        <div class="progress-text">0/5 Complete</div>
+                        <div class="progress-text">0/3 Complete</div>
                     </div>
                 </div>
             </div>
@@ -261,7 +247,7 @@
         </div>
 
         <div class="screen scoreboard-screen" id="scoreboard-screen">
-            <h2><i class="fas fa-trophy"></i> Physics Champions</h2>
+            <h2><i class="fas fa-trophy"></i> Science Champions</h2>
             
             <div class="scoreboard-header">
                 <div class="user-rank">
@@ -304,7 +290,7 @@
         </div>
 
         <div class="character">
-            <div class="bubble" id="speechBubble">Hi! I'm Professor Proton! Ready to explore physics?</div>
+            <div class="bubble" id="speechBubble">Hi! I'm Professor Proton! Ready to explore science?</div>
             <div class="robot" id="professorProton">
                 <div class="head">
                     <div class="eye left"></div>
@@ -319,7 +305,7 @@
         </div>
         
         <footer>
-            <p>Physics Playground - Where Future Physicists Are Born!</p>
+            <p>Science Playground - Where Future Scientists Are Born!</p>
             <p>Created with <i class="fas fa-heart" style="color: #FF6B6B;"></i> for curious young minds</p>
         </footer>
     </div>
