@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Motion & Forces - Physics Playground{% endblock %}
+
+{% block content %}
+<div class="screen motion-screen active" id="motion-screen">
+    <h2><i class="fas fa-running"></i> Motion & Forces</h2>
+    <div class="welcome-message">Discover how things move and what makes them stop!</div>
+    
+    <div class="concept-navigation" id="conceptNavigation">
+        <!-- Concepts will be loaded dynamically -->
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" data-topic="motion" style="width: 0%"></div>
+    </div>
+    
+    <div class="simulation-area" id="simulationArea">
+        <!-- Simulation will be loaded based on selected concept -->
+    </div>
+    
+    <div class="concept-explanation" id="conceptExplanation">
+        <!-- Concept explanation will be loaded here -->
+    </div>
+    
+    <div class="quiz-container" id="quizContainer">
+        <!-- Quiz will be loaded for some concepts -->
+    </div>
+    
+    <div class="game-controls">
+        <button class="btn btn-primary" id="backToMenu">Back to Menu</button>
+        <button class="btn btn-success" id="nextConcept">Next Concept</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/motion.js') }}"></script>
+{% endblock %}

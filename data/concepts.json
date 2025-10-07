@@ -1,0 +1,30 @@
+{
+  "motion": {
+    "speed": {
+      "title": "Speed",
+      "definition": "How fast an object is moving",
+      "formula": "speed = distance ÷ time",
+      "unit": "m/s",
+      "example": "A car traveling 100 meters in 5 seconds has a speed of 20 m/s",
+      "simulation": "moving_car"
+    },
+    "velocity": {
+      "title": "Velocity",
+      "definition": "Speed with direction",
+      "formula": "velocity = displacement ÷ time",
+      "unit": "m/s with direction",
+      "example": "A bird flying 50 meters north in 10 seconds has a velocity of 5 m/s north",
+      "simulation": "vector_movement"
+    }
+  },
+  "energy": {
+    "potential_energy": {
+      "title": "Potential Energy",
+      "definition": "Stored energy due to position",
+      "formula": "PE = m × g × h",
+      "unit": "Joules (J)",
+      "example": "A book on a shelf has potential energy",
+      "simulation": "falling_objects"
+    }
+  }
+}
