@@ -1,0 +1,60 @@
+{
+  "motion": [
+    {
+      "name": "Speed",
+      "formula": "v = d/t",
+      "description": "Velocity equals distance divided by time",
+      "variables": {
+        "v": "velocity (m/s)",
+        "d": "distance (m)",
+        "t": "time (s)"
+      }
+    },
+    {
+      "name": "Acceleration",
+      "formula": "a = (v_f - v_i) / t",
+      "description": "Acceleration equals the change in velocity over time",
+      "variables": {
+        "a": "acceleration (m/s²)",
+        "v_f": "final velocity (m/s)",
+        "v_i": "initial velocity (m/s)",
+        "t": "time (s)"
+      }
+    }
+  ],
+  "energy": [
+    {
+      "name": "Potential Energy",
+      "formula": "PE = mgh",
+      "description": "Potential energy equals mass times the acceleration due to gravity times height",
+      "variables": {
+        "PE": "potential energy (Joules)",
+        "m": "mass (kg)",
+        "g": "acceleration due to gravity (9.8 m/s²)",
+        "h": "height (m)"
+      }
+    },
+    {
+      "name": "Kinetic Energy",
+      "formula": "KE = 0.5 * m * v²",
+      "description": "Kinetic energy equals one-half times mass times the square of the velocity",
+      "variables": {
+        "KE": "kinetic energy (Joules)",
+        "m": "mass (kg)",
+        "v": "velocity (m/s)"
+      }
+    }
+  ],
+  "electricity": [
+    {
+      "name": "Ohm's Law",
+      "formula": "V = IR",
+      "description": "Voltage equals current times resistance",
+      "variables": {
+        "V": "voltage (Volts)",
+        "I": "current (Amperes)",
+        "R": "resistance (Ohms)"
+      }
+    }
+  ]
+}

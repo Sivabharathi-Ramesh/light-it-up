@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Matter & Its States - Physics Playground{% endblock %}
+
+{% block content %}
+<div class="screen matter-screen active" id="matter-screen">
+    <h2><i class="fas fa-vial"></i> Matter & Its States</h2>
+    <div class="welcome-message">Dive into the world of atoms, molecules, and phases!</div>
+    
+    <div class="concept-navigation" id="conceptNavigation">
+        </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" data-topic="matter" style="width: 0%"></div>
+    </div>
+    
+    <div class="simulation-area" id="simulationArea">
+        </div>
+    
+    <div class="concept-explanation" id="conceptExplanation">
+        </div>
+    
+    <div class="quiz-container" id="quizContainer">
+        </div>
+    
+    <div class="game-controls">
+        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
+        <button class="btn btn-success" id="nextConcept">Next Concept <i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/matter.js') }}"></script>
+{% endblock %}

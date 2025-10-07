@@ -1,0 +1,88 @@
+{
+  "motion": {
+    "speed": {
+      "title": "Speed",
+      "definition": "Speed is how fast something is moving, like a cheetah chasing its lunch! It doesn't care about direction, just how quickly it's covering ground.",
+      "example": "A racing car zipping around a track at 200 km/h is showing its incredible speed.",
+      "formula": "v = d / t",
+      "formula_breakdown": [
+        {"part": "v", "description": "is the hero, Velocity (or Speed)!", "icon": "🏃‍♂️"},
+        {"part": "d", "description": "is the Distance to travel.", "icon": "🏞️"},
+        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
+      ],
+      "animation": "speed",
+      "quiz": {
+        "question": "A turtle crawls 10 meters in 2 minutes. What is its speed?",
+        "options": ["2 m/min", "5 m/min", "12 m/min", "8 m/min"],
+        "answer": "5 m/min"
+      }
+    },
+    "velocity": {
+      "title": "Velocity",
+      "definition": "Velocity is speed with a mission! It's not just how fast you're going, but also *where* you're going. It's a vector, which means it has both speed and direction.",
+      "example": "A superhero flying at 800 km/h *towards the north* has a specific velocity.",
+      "formula": "v = Δx / t",
+      "formula_breakdown": [
+        {"part": "v", "description": "is our clever Velocity.", "icon": "🧭"},
+        {"part": "Δx", "description": "is Displacement (the change in position).", "icon": "📍"},
+        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
+      ],
+      "animation": "velocity",
+      "quiz": {
+        "question": "A car travels east at 40 mph and a bike travels west at 40 mph. Do they have the same velocity?",
+        "options": ["Yes, they have the same speed", "No, their directions are different", "Yes, because they are on the same road"],
+        "answer": "No, their directions are different"
+      }
+    },
+    "acceleration": {
+      "title": "Acceleration",
+      "definition": "Acceleration is any change in velocity. That means speeding up, slowing down, or even just turning a corner! It's the 'vroom vroom' of physics.",
+      "example": "When a rocket blasts off, it's accelerating. When a car hits the brakes, it's also accelerating (just in a negative direction!).",
+      "formula": "a = Δv / t",
+      "formula_breakdown": [
+        {"part": "a", "description": "is the awesome Acceleration!", "icon": "🚀"},
+        {"part": "Δv", "description": "is the Change in Velocity.", "icon": "💨"},
+        {"part": "t", "description": "is the Time it takes.", "icon": "⏱️"}
+      ],
+      "animation": "acceleration",
+      "quiz": {
+        "question": "A rollercoaster goes from 0 to 60 mph in 3 seconds. Is it accelerating?",
+        "options": ["Only if it's going up", "No, it's just moving fast", "Yes, because its speed is changing"],
+        "answer": "Yes, because its speed is changing"
+      }
+    },
+    "friction": {
+      "title": "Friction",
+      "definition": "Friction is a force that resists motion when two surfaces rub against each other. It's the universe's way of saying 'slow down!' and it helps us walk and stop.",
+      "example": "Rubbing your hands together to warm them up creates friction. A car's brakes use friction to stop.",
+      "formula": "Ff = μN",
+      "formula_breakdown": [
+        {"part": "Ff", "description": "is the Force of Friction.", "icon": "🤚"},
+        {"part": "μ", "description": "(mu) is how 'grippy' the surfaces are.", "icon": "✨"},
+        {"part": "N", "description": "is the Normal force (how hard they're pressed together).", "icon": "👇"}
+      ],
+      "animation": "friction",
+      "quiz": {
+        "question": "Which surface would have the MOST friction?",
+        "options": ["A sheet of ice", "A wet floor", "A sandy beach", "A polished wooden slide"],
+        "answer": "A sandy beach"
+      }
+    },
+    "newtons_first_law": {
+      "title": "Newton's First Law",
+      "definition": "An object at rest stays at rest, and an object in motion stays in motion... unless a force messes with it! It's also called the Law of Laziness (Inertia).",
+      "example": "A soccer ball won't move until you kick it. Once kicked, it would keep going forever if friction and air didn't stop it.",
+      "formula": "If ΣF=0, then v=constant",
+       "formula_breakdown": [
+        {"part": "If ΣF=0", "description": "means if all forces are balanced...", "icon": "⚖️"},
+        {"part": "then v=constant", "description": "...the velocity doesn't change!", "icon": "➡️"}
+      ],
+      "animation": "newtons_first_law",
+      "quiz": {
+        "question": "Why do you feel pushed forward when a bus suddenly stops?",
+        "options": ["The bus driver is magic", "Because of inertia", "The seats are bouncy"],
+        "answer": "Because of inertia"
+      }
+    }
+  }
+}

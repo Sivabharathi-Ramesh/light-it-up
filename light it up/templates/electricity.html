@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Electricity & Magnetism - Physics Playground{% endblock %}
+
+{% block content %}
+<div class="screen electricity-screen active" id="electricity-screen">
+    <h2><i class="fas fa-bolt"></i> Electricity & Magnetism</h2>
+    <div class="welcome-message">Unleash the power of circuits and invisible forces!</div>
+    
+    <div class="concept-navigation" id="conceptNavigation">
+        </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" data-topic="electricity" style="width: 0%"></div>
+    </div>
+    
+    <div class="simulation-area" id="simulationArea">
+        </div>
+    
+    <div class="concept-explanation" id="conceptExplanation">
+        </div>
+    
+    <div class="quiz-container" id="quizContainer">
+        </div>
+    
+    <div class="game-controls">
+        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
+        <button class="btn btn-success" id="nextConcept">Next Concept <i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/electricity.js') }}"></script>
+{% endblock %}
