@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Biology - Science Playground{% endblock %}
+
+{% block content %}
+<div class="screen biology-screen active" id="biology-screen">
+    <h2><i class="fas fa-leaf"></i> Biology Concepts</h2>
+    
+    <div class="concept-navigation" id="conceptNavigation"></div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="topicProgressBar" style="width: 0%; background: #2ECC71;"></div>
+    </div>
+
+    <div class="topic-content-grid">
+        <div class="concept-explanation" id="conceptExplanation"></div>
+        <div class="simulation-area" id="simulationArea">
+            <p>Select a concept to begin!</p>
+        </div>
+        <div class="fun-formula-area" id="funFormulaArea"></div>
+    </div>
+    
+    <div class="game-controls">
+        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
+        <button class="btn btn-success" id="nextConceptButton">Next Concept <i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/biology.js') }}"></script>
+{% endblock %}

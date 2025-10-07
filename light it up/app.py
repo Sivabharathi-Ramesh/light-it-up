@@ -1,13 +1,12 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import json
 from datetime import datetime
 import uuid
-import os  # <-- ADD THIS LINE
+import os
 
 app = Flask(__name__)
-app.secret_key = 'physics_playground_secret_key_2024'
+app.secret_key = 'science_playground_secret_key_2024'
 
-# --- GET THE ABSOLUTE PATH FOR THE PROJECT DIRECTORY ---
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # In-memory storage (for demonstration)
@@ -20,32 +19,37 @@ def index():
         session['user_id'] = str(uuid.uuid4())
     return render_template('index.html')
 
-# --- ROUTES FOR TOPIC PAGES ---
+# --- NEW UNIFIED ROUTES FOR TOPICS ---
+@app.route('/physics')
+def physics():
+    return render_template('physics.html')
+
+@app.route('/chemistry')
+def chemistry():
+    return render_template('chemistry.html')
+
+@app.route('/biology')
+def biology():
+    return render_template('biology.html')
+
+@app.route('/astronomy')
+def astronomy():
+    return render_template('astronomy.html')
+
+# --- REDIRECTS for old physics routes to prevent 404 errors ---
 @app.route('/motion')
-def motion():
-    return render_template('motion.html')
-
 @app.route('/energy')
-def energy():
-    return render_template('energy.html')
-
 @app.route('/electricity')
-def electricity():
-    return render_template('electricity.html')
-
 @app.route('/matter')
-def matter():
-    return render_template('matter.html')
-
 @app.route('/waves')
-def waves():
-    return render_template('waves.html')
+def redirect_to_physics():
+    return redirect(url_for('physics'))
+
 
 # --- API ROUTES ---
 @app.route('/get_concepts/<topic>')
 def get_concepts(topic):
     try:
-        # --- BUILD THE FULL, RELIABLE FILE PATH ---
         json_path = os.path.join(BASE_DIR, 'data', 'concepts.json')
         with open(json_path, 'r') as f:
             all_concepts = json.load(f)
@@ -66,14 +70,12 @@ def save_user():
         'grade': data['grade'],
         'total_score': 0,
         'progress': {
-            'motion': {'completed': 0, 'total': 5, 'score': 0},
-            'energy': {'completed': 0, 'total': 3, 'score': 0},
-            'electricity': {'completed': 0, 'total': 0, 'score': 0},
-            'matter': {'completed': 0, 'total': 0, 'score': 0},
-            'waves': {'completed': 0, 'total': 0, 'score': 0}
+            'physics': {'completed': 0, 'total': 10, 'score': 0},
+            'chemistry': {'completed': 0, 'total': 3, 'score': 0},
+            'biology': {'completed': 0, 'total': 3, 'score': 0},
+            'astronomy': {'completed': 0, 'total': 3, 'score': 0}
         }
     }
-    # Also add user to the leaderboard
     update_leaderboard(user_id, data['name'], 0)
     return jsonify({"status": "success", "user_id": user_id})
 
@@ -91,15 +93,13 @@ def update_progress():
     
     if user_id and user_id in user_data:
         topic = data.get('topic')
-        score = data.get('score', 10) # Default to 10 points
+        score = data.get('score', 10)
 
         if topic and topic in user_data[user_id]['progress']:
-            # Update score and completion
             user_data[user_id]['progress'][topic]['score'] += score
             user_data[user_id]['progress'][topic]['completed'] += 1
             user_data[user_id]['total_score'] += score
             
-            # Update leaderboard with new total score
             update_leaderboard(user_id, user_data[user_id]['name'], user_data[user_id]['total_score'])
             
             return jsonify({"status": "success", "new_total_score": user_data[user_id]['total_score']})
@@ -108,7 +108,6 @@ def update_progress():
 
 @app.route('/get_leaderboard')
 def get_leaderboard():
-    # Sort by score just in case, and return top 10
     sorted_leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
     return jsonify(sorted_leaderboard[:10])
 
@@ -129,7 +128,6 @@ def update_leaderboard(user_id, name, score):
             'score': score
         })
     
-    # Sort the leaderboard every time it's updated
     leaderboard.sort(key=lambda x: x['score'], reverse=True)
 
 
