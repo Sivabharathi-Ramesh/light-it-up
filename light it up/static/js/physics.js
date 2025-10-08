@@ -102,11 +102,11 @@ class PhysicsPageManager {
         const concept = this.concepts[key];
         
         this.displayExplanation(concept);
+        this.displayFunFormula(concept, key); // Pass key to identify concept
         this.displayQuiz(key, concept);
         
         // Clear previous content and start appropriate game
         this.elements.simulation.innerHTML = '';
-        this.elements.formula.innerHTML = '';
         
         // Start game/simulation for the concept
         this.startGame(key, concept);
@@ -123,6 +123,40 @@ class PhysicsPageManager {
     
     displayExplanation(concept) {
         this.elements.explanation.innerHTML = `<h3>${concept.title}</h3><p>${concept.concept}</p><hr><h4>Goal</h4><p><em>${concept.goal}</em></p>`;
+    }
+
+    displayFunFormula(concept, key) {
+        const formulaContainer = this.elements.formula;
+        formulaContainer.innerHTML = ''; // Clear previous formula
+
+        if (key === 'centrifugal_force') {
+            const breakdownHtml = `
+                <li style="animation-delay: 0.2s">
+                    <div class="formula-part">F<sub>c</sub> <span class="icon">🌪️</span></div>
+                    <div class="formula-desc">The outward force</div>
+                </li>
+                <li style="animation-delay: 0.4s">
+                    <div class="formula-part">m <span class="icon">🏋️</span></div>
+                    <div class="formula-desc">Mass (how heavy it is)</div>
+                </li>
+                 <li style="animation-delay: 0.6s">
+                    <div class="formula-part">v <span class="icon">⏩</span></div>
+                    <div class="formula-desc">Velocity (how fast it spins)</div>
+                </li>
+                 <li style="animation-delay: 0.8s">
+                    <div class="formula-part">r <span class="icon">📏</span></div>
+                    <div class="formula-desc">Radius (length of the rope)</div>
+                </li>
+            `;
+
+            formulaContainer.innerHTML = `
+                <h3>The Secret Formula! 🤫</h3>
+                <div class="formula-display">F<sub>c</sub> = (m × v²) / r</div>
+                <ul class="formula-breakdown">${breakdownHtml}</ul>
+            `;
+        } else {
+            formulaContainer.innerHTML = '<p style="text-align:center; padding-top:50px;">No formula for this one!</p>';
+        }
     }
 
     displayQuiz(key, concept) {
@@ -187,9 +221,11 @@ class PhysicsPageManager {
     centrifugalForceGame(container) {
         container.innerHTML = `
             <div class="game-area">
-              <canvas id="bucketGame" width="400" height="400"></canvas>
-              <p id="gameText">Spin the bucket fast so water doesn't spill!</p>
-              <button id="spinBtn" class="btn btn-primary">Spin!</button>
+              <canvas id="bucketGame" width="400" height="400" style="max-width: 100%;"></canvas>
+              <p id="gameText" style="text-align: center; margin-top: 10px;">Spin the bucket fast so water doesn't spill!</p>
+              <div style="text-align: center; margin-top: 10px;">
+                <button id="spinBtn" class="btn btn-primary">Spin!</button>
+              </div>
             </div>
         `;
 
@@ -197,15 +233,38 @@ class PhysicsPageManager {
         const ctx = canvas.getContext("2d");
         let angle = 0;
         let speed = 0;
+        let waterParticles = [];
 
         container.querySelector("#spinBtn").onclick = () => {
           speed += 0.05; // tap increases spin speed
         };
 
-        function draw() {
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return; 
+            }
           ctx.clearRect(0, 0, canvas.width, canvas.height);
+          
+          // Draw and update water particles
+            waterParticles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.1; // Gravity
+                p.alpha -= 0.01;
+
+                if (p.alpha <= 0) {
+                    waterParticles.splice(index, 1);
+                }
+
+                ctx.fillStyle = `rgba(0, 191, 255, ${p.alpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
           ctx.save();
-          ctx.translate(200, 200);
+          ctx.translate(canvas.width / 2, canvas.height / 2);
           ctx.rotate(angle);
           // draw rope
           ctx.beginPath();
@@ -215,13 +274,34 @@ class PhysicsPageManager {
           ctx.lineWidth = 4;
           ctx.stroke();
           // draw bucket
-          ctx.fillStyle = "#00bfff";
+          ctx.fillStyle = "#8B4513";
           ctx.fillRect(-25, -150, 50, 30);
+          
+          // Draw water in the bucket
+          if (speed > 0.1 || (angle % (2 * Math.PI) > Math.PI / 2 && angle % (2 * Math.PI) < 3 * Math.PI / 2)) {
+            ctx.fillStyle = "rgba(0, 191, 255, 0.8)";
+            ctx.fillRect(-20, -145, 40, 20);
+          }
+
+
+          // Spill water if slow at the top
+          if (speed < 0.1 && (angle % (2 * Math.PI) > Math.PI)) {
+             for (let i = 0; i < 5; i++) {
+                waterParticles.push({
+                    x: canvas.width / 2 + Math.sin(angle) * -135,
+                    y: canvas.height / 2 + Math.cos(angle) * -135,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2 - 2,
+                    alpha: 1
+                });
+            }
+          }
+          
           ctx.restore();
 
           angle += speed;
           speed *= 0.99; // friction
-          requestAnimationFrame(draw);
+          this.animationFrameId = requestAnimationFrame(draw);
         }
         draw();
     }
@@ -657,60 +737,6 @@ class PhysicsPageManager {
 
     loadNextConcept() {
         this.loadConceptByIndex((this.currentConceptIndex + 1) % this.conceptKeys.length);
-    }
-
-    // Keep existing simulations as fallbacks
-    startBuiltInSim(key) {
-        const container = this.elements.simulation;
-        switch (key) {
-            case 'momentum':
-                this.momentumSimulation(container);
-                break;
-            case 'energy':
-                this.energySimulation(container);
-                break;
-            case 'gravity':
-                this.gravitySimulation(container);
-                break;
-            case 'wave':
-            case 'waves':
-                this.waveSimulation(container);
-                break;
-            case 'electricity':
-                this.electricitySimulation(container);
-                break;
-            case 'newtons_laws_of_motion':
-            case 'newtons_laws':
-                this.newtonsLawsSimulation(container);
-                break;
-            default:
-                container.innerHTML = `<h2>${this.concepts[key] ? this.concepts[key].title : 'Simulation'}</h2><p>Interactive learning coming soon!</p>`;
-        }
-    }
-
-    // Keep original simulations as references
-    momentumSimulation(container) {
-        // Original momentum simulation code...
-    }
-
-    energySimulation(container) {
-        // Original energy simulation code...
-    }
-
-    gravitySimulation(container) {
-        // Original gravity simulation code...
-    }
-
-    waveSimulation(container) {
-        // Original wave simulation code...
-    }
-
-    electricitySimulation(container) {
-        // Original electricity simulation code...
-    }
-
-    newtonsLawsSimulation(container) {
-        // Original Newton's laws simulation code...
     }
 }
 
