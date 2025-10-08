@@ -378,21 +378,21 @@
 }
 
 .cartoon-instructor-container {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+    position: last;
+    bottom: 10px;
+    left: 10px;
     display: flex;
     align-items: flex-end;
-    gap: 15px;
+    gap: 10px;
 }
 
 .cartoon-instructor {
-    width: 200px;
-    height: 300px;
+    width: 300px;
+    height: 350px;
 }
 
 .cartoon-speech-bubble {
-    background: #112dcc;
+    background: #400b94;
     border-radius: 15px;
     padding: 10px 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
