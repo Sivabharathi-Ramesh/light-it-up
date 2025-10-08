@@ -15,6 +15,34 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # In-memory storage (for demonstration, NOT thread-safe for production)
 user_data = {}
 leaderboard = []
+PERSIST_PATH = os.path.join(BASE_DIR, 'data', 'user_progress.json')
+
+
+def load_persisted_state():
+    global user_data, leaderboard
+    try:
+        if os.path.exists(PERSIST_PATH):
+            with open(PERSIST_PATH, 'r') as pf:
+                payload = json.load(pf)
+                user_data = payload.get('user_data', {})
+                leaderboard = payload.get('leaderboard', [])
+    except Exception:
+        # If corrupted, ignore and start fresh
+        user_data = {}
+        leaderboard = []
+
+
+def save_persisted_state():
+    try:
+        payload = {
+            'user_data': user_data,
+            'leaderboard': leaderboard
+        }
+        with open(PERSIST_PATH, 'w') as pf:
+            json.dump(payload, pf, indent=2)
+    except Exception as e:
+        # Log to stdout for dev visibility
+        print('Failed to save persisted state:', e)
 
 @app.route('/')
 def index():
@@ -91,6 +119,7 @@ def save_user():
         }
     }
     update_leaderboard(user_id, data['name'], 0)
+    save_persisted_state()
     return jsonify({"status": "success", "user_id": user_id})
 
 @app.route('/get_user_data')
@@ -144,6 +173,14 @@ def update_leaderboard(user_id, name, score):
         })
 
     leaderboard.sort(key=lambda x: x['score'], reverse=True)
+    # persist leaderboard change
+    save_persisted_state()
+
+
+# Load persisted state on startup
+load_persisted_state()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Allow overriding port via environment for easier testing
+    port = int(os.environ.get('PORT', '5000'))
+    app.run(host='0.0.0.0', port=port, debug=True)
