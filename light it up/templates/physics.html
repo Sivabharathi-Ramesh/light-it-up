@@ -9,33 +9,37 @@
 
 {% block content %}
 <div class="screen physics-screen active" id="physics-screen">
-    <h2><i class="fas fa-atom"></i> Physics Mini-Games</h2>
-    
-    <div class="concept-navigation" id="conceptNavigation">
-        <!-- Game selection buttons are dynamically loaded here -->
+    <div class="topic-header">
+        <h2><i class="fas fa-atom"></i> Physics Mini-Games</h2>
+        <div class="instruction-bubble">
+            Hover over a box to hear its name, and click to start exploring!
+        </div>
     </div>
     
-    <div class="progress-container">
+    <div class="concept-navigation" id="conceptNavigation">
+        </div>
+    
+    <div class="progress-container" style="margin-top: 30px;">
         <div class="progress-bar" id="topicProgressBar" style="width: 0%"></div>
     </div>
 
-    <div class="topic-content-grid">
+    <div class="topic-content-grid" id="topicContentGrid" style="display: none;">
         <div class="concept-explanation" id="conceptExplanation">
-            <!-- Game title and learning goal appear here -->
         </div>
 
         <div class="simulation-area" id="simulationArea">
-            <p>Select a concept above to start a mini-game!</p>
         </div>
 
         <div class="fun-formula-area" id="funFormulaArea">
-            <!-- The interactive formula bars for each game appear here -->
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
         </div>
     </div>
     
     <div class="game-controls">
         <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
-        <button class="btn btn-success" id="nextConceptButton">Next Game <i class="fas fa-arrow-right"></i></button>
+        <button class="btn btn-success" id="nextConceptButton" style="display: none;">Next Game <i class="fas fa-arrow-right"></i></button>
     </div>
 </div>
 {% endblock %}
@@ -43,4 +47,3 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/physics.js') }}"></script>
 {% endblock %}
-

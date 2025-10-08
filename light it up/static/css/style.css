@@ -797,3 +797,149 @@ footer { text-align: center; padding: 20px; margin-top: 30px; font-size: 0.9rem;
 @keyframes move-lines { from { transform: translateX(0); } to { transform: translateX(-80px); } }
 #sim-car, #sim-rocket { position: absolute; font-size: 60px; transition: all 0.1s linear; }
 .velocity-arrow { position: absolute; font-size: 2rem; color: var(--energy); opacity: 0; transition: opacity 0.3s ease; }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+}
+
+:root {
+    --primary: #4A90E2;
+    --secondary: #50C878;
+    --accent: #FF6B6B;
+    --energy: #FFD700;
+    --matter: #9B59B6;
+    --motion: #3498DB;
+    --waves: #1ABC9C;
+    --electricity: #F39C12;
+    --light: #F8F9FA;
+    --dark: #2C3E50;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+}
+
+body {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--light);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 { font-size: 3.5rem; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2); color: #FFD700; }
+h2 { font-size: 2.2rem; margin: 20px 0; color: #FFD700; }
+h3 { font-size: 1.8rem; margin: 15px 0; color: #FFD700; }
+h4 { font-size: 1.4rem; margin: 10px 0; color: #FFD700; }
+
+.screen { background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 30px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); display: none; animation: fadeIn 0.5s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Header and Main Menu Styles */
+header { text-align: center; padding: 20px 0; background: rgba(0, 0, 0, 0.3); border-radius: 20px; margin-bottom: 20px; }
+.main-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+.topic-card { background: rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s ease; animation: float 6s ease-in-out infinite alternate; }
+.topic-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); }
+.topic-icon { font-size: 4rem; margin-bottom: 15px; }
+
+/* === PHYSICS PAGE NEW STYLES === */
+.topic-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.instruction-bubble {
+    background: var(--light);
+    color: var(--dark);
+    padding: 15px 20px;
+    border-radius: 20px;
+    position: relative;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.instruction-bubble::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 15px solid var(--light);
+}
+
+.concept-navigation {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.concept-item {
+    background: rgba(0, 0, 0, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: float 8s ease-in-out infinite alternate;
+}
+
+.concept-item:nth-child(2n) { animation-delay: -2s; }
+.concept-item:nth-child(3n) { animation-delay: -4s; }
+.concept-item:nth-child(4n) { animation-delay: -6s; }
+
+.concept-item:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--energy);
+    box-shadow: 0 0 20px var(--energy);
+}
+
+.concept-item i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--energy);
+    display: block;
+}
+
+.concept-item span {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* General Topic Page Styles */
+.topic-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.concept-explanation, .simulation-area, .fun-formula-area, .quiz-container { background: rgba(0,0,0,0.2); border-radius: 15px; padding: 20px; min-height: 250px; }
+.simulation-area { display: flex; align-items: center; justify-content: center; }
+.game-controls { display: flex; justify-content: center; margin-top: 20px; }
+.btn { padding: 12px 24px; border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; font-weight: bold; background: var(--primary); color: white; }
+.btn:hover { transform: translateY(-3px); }
+
+/* Other Styles */
+@keyframes float {
+    0% { transform: translateY(5px); }
+    100% { transform: translateY(-5px); }
+}

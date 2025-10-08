@@ -1,14 +1,17 @@
 // Utility functions
 class PhysicsUtils {
     static calculateSpeed(distance, time) {
+        if (time === 0) return 0;
         return distance / time;
     }
 
     static calculateVelocity(displacement, time) {
+        if (time === 0) return 0;
         return displacement / time;
     }
 
     static calculateAcceleration(initialVelocity, finalVelocity, time) {
+        if (time === 0) return 0;
         return (finalVelocity - initialVelocity) / time;
     }
 
@@ -25,10 +28,12 @@ class PhysicsUtils {
     }
 
     static calculateOhmsLaw(voltage, resistance) {
+        if (resistance === 0) return Infinity;
         return voltage / resistance;
     }
 
     static calculateDensity(mass, volume) {
+        if (volume === 0) return Infinity;
         return mass / volume;
     }
 
@@ -65,6 +70,20 @@ class AnimationManager {
 }
 
 class SpeechManager {
+    static isInitialized = false;
+
+    // This function should be called after the first user interaction (e.g., a click)
+    static init() {
+        if (this.isInitialized || !('speechSynthesis' in window)) {
+            return;
+        }
+        // A dummy speak call to unlock the API in some browsers
+        const utterance = new SpeechSynthesisUtterance('');
+        window.speechSynthesis.speak(utterance);
+        this.isInitialized = true;
+        console.log("Speech synthesis initialized.");
+    }
+
     static showMessage(message, duration = 5000) {
         const bubble = document.getElementById('speechBubble');
         if (bubble) {
@@ -77,15 +96,26 @@ class SpeechManager {
         }
     }
 
+    static speak(text) {
+        if ('speechSynthesis' in window) {
+            // Check if speech is already happening to avoid interruptions
+            if (window.speechSynthesis.speaking) {
+                return;
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.1; // Slightly faster speech
+            utterance.pitch = 1.2; // Slightly higher pitch
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.warn('Text-to-speech not supported in this browser.');
+        }
+    }
+
     static showRandomTip() {
         const tips = [
             "Did you know? Light travels at 299,792,458 meters per second!",
             "Fun fact: Sound travels faster in water than in air!",
             "Interesting: The Earth's gravity is what keeps us from floating away!",
-            "Cool fact: Magnets have been used for navigation for centuries!",
-            "Amazing: Electricity can be generated from sunlight!",
-            "Fascinating: Atoms are mostly empty space!",
-            "Wow: The human ear can detect sounds from 20 Hz to 20,000 Hz!"
         ];
         
         const randomTip = tips[Math.floor(Math.random() * tips.length)];
