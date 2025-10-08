@@ -890,9 +890,40 @@ footer { text-align: center; padding: 20px; margin-top: 30px; font-size: 0.9rem;
 .concept-item.active { background: var(--motion); color: white; font-weight: bold; box-shadow: 0 0 15px var(--motion); }
 .topic-content-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 20px; margin-top: 20px; }
 .concept-explanation, .simulation-area, .fun-formula-area, .quiz-container { background: rgba(0,0,0,0.2); border-radius: 15px; padding: 20px; min-height: 250px; }
+.concept-explanation p {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    animation: slideInFromTop 0.5s ease-out;
+}
 .simulation-area { display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; position: relative; }
 .fun-formula-area h3 { text-align: center; color: var(--energy); }
 .formula-display { font-size: 2rem; font-weight: bold; text-align: center; margin: 10px 0 20px 0; color: var(--light); text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+.formula-breakdown {
+    list-style: none;
+    padding: 0;
+}
+.formula-breakdown li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0;
+    animation: slideInFromBottom 0.5s ease-out forwards;
+}
+.formula-part {
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.formula-desc {
+    font-size: 1rem;
+}
+
 
 /* Quiz Styles */
 .quiz-question { font-size: 1.2rem; margin-bottom: 20px; }

@@ -154,6 +154,23 @@ class PhysicsPageManager {
                 <div class="formula-display">F<sub>c</sub> = (m × v²) / r</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
+        } else if (key === 'conservation_of_energy') {
+            const breakdownHtml = `
+                <li style="animation-delay: 0.2s">
+                    <div class="formula-part">PE <span class="icon">🎈</span></div>
+                    <div class="formula-desc">Potential Energy (stored)</div>
+                </li>
+                <li style="animation-delay: 0.4s">
+                    <div class="formula-part">KE <span class="icon">🏃</span></div>
+                    <div class="formula-desc">Kinetic Energy (moving)</div>
+                </li>
+            `;
+
+            formulaContainer.innerHTML = `
+                <h3>The Secret Formula! 🤫</h3>
+                <div class="formula-display">PE + KE = Constant</div>
+                <ul class="formula-breakdown">${breakdownHtml}</ul>
+            `;
         } else {
             formulaContainer.innerHTML = '<p style="text-align:center; padding-top:50px;">No formula for this one!</p>';
         }
@@ -205,6 +222,9 @@ class PhysicsPageManager {
             case 'centrifugal_force':
                 this.centrifugalForceGame(gameContainer);
                 break;
+            case 'conservation_of_energy':
+                this.conservationOfEnergyGame(gameContainer);
+                break;
             default:
                 // Fallback to Lottie animation or simple simulation
                 this.tryLoadLottie(container, concept.animation).then(loaded => {
@@ -217,6 +237,34 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    
+    conservationOfEnergyGame(container) {
+        container.innerHTML = `
+            <div class="game-area">
+              <p id="energyText" class="energy-text">☀️ Solar Energy → Click to start!</p>
+              <button id="energyBtn" class="btn btn-primary">Transform</button>
+            </div>
+        `;
+
+        const stages = [
+          "☀️ Solar Energy → ⚡ Electrical Energy",
+          "⚡ Electrical Energy → 🔩 Mechanical Energy",
+          "🔩 Mechanical Energy → 💡 Light Energy",
+          "💡 Light Energy → ☀️ Back to Solar!"
+        ];
+        let step = 0;
+        const energyText = container.querySelector("#energyText");
+        energyText.classList.add('active');
+
+        container.querySelector("#energyBtn").onclick = ()=>{
+          step = (step+1)%stages.length;
+          energyText.classList.remove('active');
+          setTimeout(() => {
+            energyText.innerText = stages[step];
+            energyText.classList.add('active');
+          }, 100);
+        };
+    }
 
     centrifugalForceGame(container) {
         container.innerHTML = `
