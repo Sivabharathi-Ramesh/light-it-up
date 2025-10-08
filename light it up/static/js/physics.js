@@ -171,7 +171,7 @@ class PhysicsPageManager {
                 <div class="formula-display">PE + KE = Constant</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
-        } else if (key === 'electric_circuits') {
+        } else if (key === 'electric_circuits' || key === 'electricity') {
             const breakdownHtml = `
                 <li style="animation-delay: 0.2s">
                     <div class="formula-part">V <span class="icon">🔋</span></div>
@@ -232,6 +232,9 @@ class PhysicsPageManager {
             case 'waves':
                 this.waveGame(gameContainer);
                 break;
+            case 'electricity':
+                 this.staticElectricityGame(gameContainer);
+                 break;
             case 'electric_circuits':
                 this.electricityGame(gameContainer, concept);
                 break;
@@ -257,6 +260,57 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    staticElectricityGame(container) {
+        container.innerHTML = `
+            <div class="game-area">
+              <canvas id="staticGame" width="400" height="300"></canvas>
+              <button id="rubBtn" class="btn btn-primary">Rub the Balloon!</button>
+            </div>
+        `;
+
+        const s = container.querySelector("#staticGame");
+        const sx = s.getContext("2d");
+        let charge = 0, stuck = false;
+
+        container.querySelector("#rubBtn").onclick = ()=>{
+          charge += 10;
+          if (charge > 50) stuck = true;
+        };
+
+        const drawBalloon = () => {
+          if (!this.elements.contentGrid.contains(s)) {
+              if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+              return;
+          }
+          sx.clearRect(0,0,400,300);
+          // wall
+          sx.fillStyle="#607d8b";
+          sx.fillRect(300,0,20,300);
+          // balloon
+          sx.beginPath();
+          sx.arc(stuck ? 270 : 150,150,30,0,Math.PI*2);
+          sx.fillStyle="#ff4081";
+          sx.fill();
+          
+          // charge particles
+          if (charge > 0) {
+              for (let i = 0; i < charge; i+=5) {
+                sx.fillStyle = `rgba(255, 255, 0, ${Math.random() * 0.5 + 0.5})`;
+                sx.beginPath();
+                sx.arc((stuck ? 270 : 150) + (Math.random() - 0.5) * 40, 150 + (Math.random() - 0.5) * 40, 3, 0, Math.PI * 2);
+                sx.fill();
+              }
+          }
+
+          // text
+          sx.fillStyle="#fff";
+          sx.font = "16px 'Comic Sans MS'";
+          sx.textAlign = 'center';
+          sx.fillText(stuck ? "The balloon sticks — static electricity!" : "Rub to charge the balloon!", 200, 280);
+          this.animationFrameId = requestAnimationFrame(drawBalloon);
+        }
+        drawBalloon();
+    }
     
     electricityGame(container, concept) {
         container.innerHTML = `
