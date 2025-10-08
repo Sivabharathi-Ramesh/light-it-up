@@ -58,14 +58,14 @@
     },
     "e535905b-d330-442c-bdf4-59349cac2ece": {
       "id": "e535905b-d330-442c-bdf4-59349cac2ece",
-      "name": "nandita",
+      "name": "bhavana",
       "grade": 1,
-      "total_score": 30,
+      "total_score": 0,
       "progress": {
         "physics": {
-          "completed": 3,
+          "completed": 0,
           "total": 10,
-          "score": 30
+          "score": 0
         },
         "chemistry": {
           "completed": 0,
@@ -117,7 +117,7 @@
     {
       "id": "e535905b-d330-442c-bdf4-59349cac2ece",
       "name": "siva",
-      "score": 30
+      "score": 0
     },
     {
       "id": "2cf01f8a-f698-4998-8c27-c17480aa730e",

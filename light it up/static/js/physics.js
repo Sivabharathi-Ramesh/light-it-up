@@ -192,6 +192,27 @@ class PhysicsPageManager {
                 <div class="formula-display">F = k * (|q₁q₂| / r²)</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
+        } else if (key === 'electromagnetism') {
+            const breakdownHtml = `
+                <li style="animation-delay: 0.2s">
+                    <div class="formula-part">c <span class="icon">⚡</span></div>
+                    <div class="formula-desc">Speed of Light (a constant!)</div>
+                </li>
+                <li style="animation-delay: 0.4s">
+                    <div class="formula-part">λ <span class="icon">🌊</span></div>
+                    <div class="formula-desc">Wavelength (distance between waves)</div>
+                </li>
+                 <li style="animation-delay: 0.6s">
+                    <div class="formula-part">ν <span class="icon">⏱️</span></div>
+                    <div class="formula-desc">Frequency (waves per second)</div>
+                </li>
+            `;
+
+            formulaContainer.innerHTML = `
+                <h3>The Secret Formula! 🤫</h3>
+                <div class="formula-display">c = λν</div>
+                <ul class="formula-breakdown">${breakdownHtml}</ul>
+            `;
         } else {
             formulaContainer.innerHTML = '<p style="text-align:center; padding-top:50px;">No formula for this one!</p>';
         }
@@ -248,6 +269,9 @@ class PhysicsPageManager {
             case 'conservation_of_energy':
                 this.conservationOfEnergyGame(gameContainer);
                 break;
+            case 'electromagnetism':
+                this.electromagneticSpectrumGame(gameContainer);
+                break;
             default:
                 // Fallback to Lottie animation or simple simulation
                 this.tryLoadLottie(container, concept.animation).then(loaded => {
@@ -260,6 +284,80 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    electromagneticSpectrumGame(container) {
+        container.innerHTML = `
+            <div class="game-area">
+              <p style="text-align: center; margin-bottom: 10px;">🧠 Drag the waves in order — from lowest to highest energy!</p>
+              <div id="emContainer" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+                <div draggable="true" class="em-item">📻 Radio Waves</div>
+                <div draggable="true" class="em-item">📡 Microwaves</div>
+                <div draggable="true" class="em-item">🌈 Visible Light</div>
+                <div draggable="true" class="em-item">📺 Infrared</div>
+                <div draggable="true" class="em-item">☢️ Gamma Rays</div>
+                <div draggable="true" class="em-item">🧬 X-Rays</div>
+                <div draggable="true" class="em-item">💜 Ultraviolet</div>
+              </div>
+              <div style="text-align: center; margin-top: 20px;">
+                <button id="checkOrder" class="btn btn-success">Check Order ✅</button>
+              </div>
+              <p id="result" style="text-align: center; margin-top: 10px; font-weight: bold;"></p>
+            </div>
+        `;
+
+        const correctOrder = [
+          "📻 Radio Waves",
+          "📡 Microwaves",
+          "📺 Infrared",
+          "🌈 Visible Light",
+          "💜 Ultraviolet",
+          "🧬 X-Rays",
+          "☢️ Gamma Rays"
+        ];
+
+        const emContainer = container.querySelector("#emContainer");
+        let dragged = null;
+
+        container.querySelectorAll(".em-item").forEach(el => {
+          el.style.padding = "10px";
+          el.style.border = "2px solid #fff";
+          el.style.borderRadius = "8px";
+          el.style.background = "#212121";
+          el.style.cursor = "move";
+          el.ondragstart = (e) => {
+              dragged = e.target;
+              e.target.style.opacity = '0.5';
+          };
+          el.ondragend = (e) => {
+              e.target.style.opacity = '1';
+          };
+          el.ondragover = e => e.preventDefault();
+          el.ondrop = e => {
+            e.preventDefault();
+            if (dragged && dragged !== e.target) {
+                const draggedIndex = Array.from(emContainer.children).indexOf(dragged);
+                const targetIndex = Array.from(emContainer.children).indexOf(e.target);
+                if (draggedIndex < targetIndex) {
+                    emContainer.insertBefore(dragged, e.target.nextSibling);
+                } else {
+                    emContainer.insertBefore(dragged, e.target);
+                }
+            }
+          };
+        });
+
+        container.querySelector("#checkOrder").onclick = () => {
+          const current = [...emContainer.children].map(c => c.textContent.trim());
+          const result = container.querySelector("#result");
+          if (JSON.stringify(current) === JSON.stringify(correctOrder)) {
+            result.textContent = "✅ Correct! You built the EM spectrum!";
+            result.style.color = 'var(--success)';
+          } else {
+            result.textContent = "❌ Try again — check the order!";
+            result.style.color = 'var(--danger)';
+          }
+        };
+    }
+    
     staticElectricityGame(container) {
         container.innerHTML = `
             <div class="game-area">
