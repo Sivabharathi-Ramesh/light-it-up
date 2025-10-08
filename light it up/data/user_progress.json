@@ -60,12 +60,12 @@
       "id": "e535905b-d330-442c-bdf4-59349cac2ece",
       "name": "siva",
       "grade": 1,
-      "total_score": 0,
+      "total_score": 10,
       "progress": {
         "physics": {
-          "completed": 0,
+          "completed": 1,
           "total": 10,
-          "score": 0
+          "score": 10
         },
         "chemistry": {
           "completed": 0,
@@ -115,17 +115,17 @@
   },
   "leaderboard": [
     {
+      "id": "e535905b-d330-442c-bdf4-59349cac2ece",
+      "name": "siva",
+      "score": 10
+    },
+    {
       "id": "2cf01f8a-f698-4998-8c27-c17480aa730e",
       "name": "siva",
       "score": 0
     },
     {
       "id": "cf970fe1-1f6e-44c2-8910-1a7d71bce2d4",
-      "name": "siva",
-      "score": 0
-    },
-    {
-      "id": "e535905b-d330-442c-bdf4-59349cac2ece",
       "name": "siva",
       "score": 0
     },

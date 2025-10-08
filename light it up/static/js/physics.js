@@ -71,6 +71,7 @@ class PhysicsPageManager {
             if (key.includes('force')) iconClass = 'fa-gavel';
             if (key.includes('momentum')) iconClass = 'fa-arrows-alt-h';
             if (key.includes('electric')) iconClass = 'fa-bolt';
+            if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
             
             navItem.innerHTML = `<i class="fas ${iconClass}"></i><span>${concept.title}</span>`;
             
@@ -167,6 +168,9 @@ class PhysicsPageManager {
             case 'force':
                 this.forceGame(gameContainer);
                 break;
+            case 'centrifugal_force':
+                this.centrifugalForceGame(gameContainer);
+                break;
             default:
                 // Fallback to Lottie animation or simple simulation
                 this.tryLoadLottie(container, concept.animation).then(loaded => {
@@ -180,6 +184,48 @@ class PhysicsPageManager {
 
     // ===== GAME IMPLEMENTATIONS =====
 
+    centrifugalForceGame(container) {
+        container.innerHTML = `
+            <div class="game-area">
+              <canvas id="bucketGame" width="400" height="400"></canvas>
+              <p id="gameText">Spin the bucket fast so water doesn't spill!</p>
+              <button id="spinBtn" class="btn btn-primary">Spin!</button>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#bucketGame");
+        const ctx = canvas.getContext("2d");
+        let angle = 0;
+        let speed = 0;
+
+        container.querySelector("#spinBtn").onclick = () => {
+          speed += 0.05; // tap increases spin speed
+        };
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.save();
+          ctx.translate(200, 200);
+          ctx.rotate(angle);
+          // draw rope
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.lineTo(0, -120);
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 4;
+          ctx.stroke();
+          // draw bucket
+          ctx.fillStyle = "#00bfff";
+          ctx.fillRect(-25, -150, 50, 30);
+          ctx.restore();
+
+          angle += speed;
+          speed *= 0.99; // friction
+          requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
     momentumGame(container) {
         container.className = 'game-container momentum-game';
         container.innerHTML = `
