@@ -34,7 +34,9 @@ class PhysicsPlayground {
         document.querySelectorAll('.topic-card').forEach(card => {
             card.addEventListener('click', (e) => {
                 const topic = e.currentTarget.dataset.topic;
-                window.location.href = `/${topic}`;
+                if (topic) {
+                    window.location.href = `/${topic}`;
+                }
             });
         });
 
@@ -209,10 +211,13 @@ class PhysicsPlayground {
         this.showScreen('main-menu-screen');
         this.updateUserHeader();
         this.updateProgressDisplays();
-        SpeechManager.showMessage(`Welcome back, ${this.currentUser.name}! What would you like to explore?`);
+        if (this.currentUser && this.currentUser.name) {
+            SpeechManager.showMessage(`Welcome back, ${this.currentUser.name}! What would you like to explore?`);
+        }
     }
 
     updateUserHeader() {
+        if (!this.currentUser) return;
         document.getElementById('userWelcome').textContent = `Welcome back, ${this.currentUser.name}!`;
         document.getElementById('userTotalScore').textContent = this.currentUser.total_score || '0';
     }
@@ -227,8 +232,11 @@ class PhysicsPlayground {
 
         const overallProgress = totalConcepts > 0 ? (completedConcepts / totalConcepts) * 100 : 0;
         
-        document.getElementById('overallProgressBar').style.width = `${overallProgress}%`;
-        document.getElementById('overallProgressText').textContent = 
+        const overallProgressBar = document.getElementById('overallProgressBar');
+        const overallProgressText = document.getElementById('overallProgressText');
+
+        if(overallProgressBar) overallProgressBar.style.width = `${overallProgress}%`;
+        if(overallProgressText) overallProgressText.textContent = 
             `${Math.round(overallProgress)}% Complete (${completedConcepts}/${totalConcepts} concepts)`;
         
         for (const topic in this.userProgress) {
@@ -269,7 +277,7 @@ class PhysicsPlayground {
             return;
         }
         leaderboard.forEach((entry, index) => {
-            const isCurrentUser = this.currentUser && entry.user_id === this.currentUser.id;
+            const isCurrentUser = this.currentUser && entry.id === this.currentUser.id;
             const entryHtml = `
                 <div class="rank-col">#${index + 1}</div>
                 <div class="name-col">${isCurrentUser ? '👤 ' : ''}${entry.name}</div>
@@ -285,15 +293,15 @@ class PhysicsPlayground {
     
     getBadgesHtml(score) {
         let badgesHtml = '';
-        if (score >= 500) badgesHtml += '<div class="badge">🏆 Pro</div>';
-        if (score >= 200) badgesHtml += '<div class="badge">⭐ Star</div>';
+        if (score >= 50) badgesHtml += '<div class="badge">🏆 Pro</div>';
+        if (score >= 20) badgesHtml += '<div class="badge">⭐ Star</div>';
         return badgesHtml || '---';
     }
 
     updateUserRank(leaderboard) {
-        const userEntry = this.currentUser && leaderboard.find(entry => entry.user_id === this.currentUser.id);
+        const userEntry = this.currentUser && leaderboard.find(entry => entry.id === this.currentUser.id);
         if (userEntry) {
-            const rank = leaderboard.indexOf(userEntry) + 1;
+            const rank = leaderboard.findIndex(entry => entry.id === this.currentUser.id) + 1;
             document.getElementById('userRank').textContent = `#${rank}`;
             document.getElementById('userScoreDisplay').textContent = userEntry.score;
         } else if(this.currentUser) {

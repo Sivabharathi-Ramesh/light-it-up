@@ -1,0 +1,89 @@
+{
+    "scientists": [
+        {
+            "name": "Albert Einstein",
+            "discoveries": "Photon (light quantum), General and Special Theory of Relativity, Mass-energy equivalence (E=mc²).",
+            "bio": "Albert Einstein's concept of the photon originated from his explanation of the photoelectric effect. He is best known for his theories of relativity, which revolutionized our understanding of space, time, gravity, and the universe."
+        },
+        {
+            "name": "J.J. Thomson",
+            "discoveries": "Electron (first subatomic particle), Isotopes of stable elements.",
+            "bio": "J.J. Thomson, an English physicist, is credited with the discovery of the electron. He showed that cathode rays were composed of previously unknown negatively charged particles, which he calculated to be much smaller than atoms."
+        },
+        {
+            "name": "Ernest Rutherford",
+            "discoveries": "Proton, Atomic Nucleus (Rutherford model), Hypothesized the neutron.",
+            "bio": "Regarded as the 'father of nuclear physics,' Ernest Rutherford proposed that atoms have a small, charged nucleus surrounded by empty space and circled by electrons. This became known as the Rutherford model."
+        },
+        {
+            "name": "John Dalton",
+            "discoveries": "Dalton's Atomic Theory.",
+            "bio": "John Dalton's major contribution was his atomic theory, which proposed that all matter is composed of atoms, that these atoms are indivisible and indestructible, and that atoms of a given element are identical in size and mass."
+        },
+        {
+            "name": "James Chadwick",
+            "discoveries": "Neutron.",
+            "bio": "James Chadwick was awarded the Nobel Prize in 1935 for his discovery of the neutron. His findings were pivotal to the discovery of nuclear fission and the development of the atomic bomb."
+        },
+        {
+            "name": "Isaac Newton",
+            "discoveries": "Three Laws of Motion, Law of Universal Gravitation, Calculus.",
+            "bio": "Isaac Newton's discoveries laid the foundation for classical mechanics. His laws of motion and the discovery of gravitational force gave us the ability to predict the movement of celestial bodies."
+        },
+        {
+            "name": "Charles-Augustin de Coulomb",
+            "discoveries": "Coulomb's Law (electrostatic attraction and repulsion).",
+            "bio": "Charles-Augustin de Coulomb is best known for Coulomb's law, which explains electrostatic attraction and repulsion. The SI unit of electric charge, the Coulomb, is named after him."
+        },
+        {
+            "name": "Georg Simon Ohm",
+            "discoveries": "Ohm's Law (V=IR).",
+            "bio": "Georg Simon Ohm, a German Physicist, discovered the law named after him, which states that the current flowing through a conductor is directly proportional to the voltage and inversely proportional to the resistance."
+        },
+        {
+            "name": "Michael Faraday",
+            "discoveries": "Electromagnetic Induction, Benzene, Laws of Electrolysis.",
+            "bio": "Michael Faraday was a man devoted to discovery through experimentation. He is famous for never giving up on ideas that came from scientific intuition and made numerous discoveries in electromagnetism and electrochemistry."
+        },
+        {
+            "name": "Thomas Edison",
+            "discoveries": "Incandescent light bulb, Motion picture camera, Phonograph.",
+            "bio": "Described as 'America's greatest inventor,' Thomas Edison developed many devices in fields like mass communication and electric power generation. He was a pioneer in applying the principles of organized science and teamwork to invention."
+        },
+        {
+            "name": "Henri Becquerel",
+            "discoveries": "Radioactivity.",
+            "bio": "Henri Becquerel was a French physicist best known for his discovery of radioactivity, for which he won a Nobel Prize. The SI unit for radioactivity, the Becquerel (Bq), is named after him."
+        },
+        {
+            "name": "Marie Sklodowska-Curie",
+            "discoveries": "Polonium and Radium, Pioneering research on radioactivity.",
+            "bio": "Marie Curie was a chemist who conducted groundbreaking research on radioactivity. She was the first woman to win a Nobel Prize and is the only person to win the Nobel Prize in two different scientific fields."
+        },
+        {
+            "name": "Max Planck",
+            "discoveries": "Quantum Theory of Energy.",
+            "bio": "Max Planck, a German Physicist, is best known for his proposition of the quantum theory of energy, for which he was awarded the Nobel Prize. His work contributed significantly to the understanding of atomic and subatomic processes."
+        },
+        {
+            "name": "Heinrich Rudolf Hertz",
+            "discoveries": "Photoelectric Effect, Electromagnetic waves.",
+            "bio": "During his work on electromagnetism, Heinrich Hertz reported the photoelectric effect. This discovery later led Albert Einstein to propose that light comes in discrete packets of energy called photons, a foundational concept of quantum mechanics."
+        },
+        {
+            "name": "Wilhelm Conrad Röntgen",
+            "discoveries": "X-rays.",
+            "bio": "Wilhelm Conrad Röntgen, a German physicist, produced and detected electromagnetic radiation in a wavelength range known as X-rays. This discovery earned him the first-ever Nobel Prize in Physics."
+        },
+        {
+            "name": "Niels Bohr",
+            "discoveries": "Bohr Model of the Atom (quantized electron orbits).",
+            "bio": "Niels Bohr worked on Rutherford’s atomic model and proposed that electrons revolve in quantized orbits, proving that particles couldn’t occupy just any energy level. This model was a significant step in understanding atomic structure."
+        },
+        {
+            "name": "Enrico Fermi",
+            "discoveries": "World's first nuclear reactor, Induced radioactivity.",
+            "bio": "Enrico Fermi, an Italian-American physicist, created the world’s first nuclear reactor and is widely known as the 'architect of the nuclear age.' He won a Nobel Prize for his work on induced radioactivity by neutron bombardment."
+        }
+    ]
+}

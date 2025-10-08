@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Famous Scientists - Science Playground{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scientists.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="screen scientists-screen active" id="scientists-screen">
+    <h2><i class="fas fa-user-friends"></i> Famous Scientists & Their Discoveries</h2>
+    
+    <div class="scientists-layout">
+        <div class="scientists-list-container">
+            <h3>Pioneers of Science</h3>
+            <div class="scientists-list" id="scientistsList">
+                </div>
+        </div>
+        
+        <div class="scientist-details-container">
+            <div id="scientistDetails">
+                <div class="placeholder">
+                    <i class="fas fa-atom"></i>
+                    <p>Select a scientist from the list to learn more about their incredible contributions!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-controls">
+        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scientists.js') }}"></script>
+{% endblock %}

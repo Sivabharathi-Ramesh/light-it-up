@@ -1,74 +1,100 @@
 {
   "physics": {
-    "force_and_motion": {
-      "title": "Force & Motion",
-      "concept": "Explore how force (a push or a pull) changes an object’s motion. This is the core of Newton’s Second Law!",
-      "goal": "Understand the relationship between Force, Mass, and Acceleration (F = ma) and see how friction opposes motion.",
-      "animation": "force_and_motion",
-      "formula": "F = m × a"
+    "speed": {
+      "title": "Speed",
+      "concept": "Speed is the rate at which an object covers distance. It's about how fast you are going, regardless of direction.",
+      "goal": "Observe how a car moving a set distance over time has a measurable speed.",
+      "animation": "speed",
+      "formula": "Speed = Distance / Time",
+      "quiz": {
+        "question": "If a car travels 100 meters in 10 seconds, what is its speed?",
+        "options": ["10 m/s", "100 m/s", "1 m/s"],
+        "answer": "10 m/s"
+      }
+    },
+    "velocity": {
+      "title": "Velocity",
+      "concept": "Velocity is speed in a given direction. It's not just how fast, but also where you are going.",
+      "goal": "Understand that velocity includes direction by watching a plane fly across the screen.",
+      "animation": "velocity",
+      "formula": "Velocity = Speed + Direction",
+       "quiz": {
+        "question": "What makes velocity different from speed?",
+        "options": ["Weight", "Direction", "Temperature"],
+        "answer": "Direction"
+      }
+    },
+    "acceleration": {
+      "title": "Acceleration",
+      "concept": "Acceleration is the rate of change of velocity. You accelerate when you speed up, slow down, or change direction.",
+      "goal": "See acceleration in action as a rocket speeds up when it launches into the sky.",
+      "animation": "acceleration",
+      "formula": "a = Δv / Δt",
+       "quiz": {
+        "question": "A rocket speeding up to go to the moon is an example of...?",
+        "options": ["Sleeping", "Acceleration", "Floating"],
+        "answer": "Acceleration"
+      }
     },
     "gravity": {
       "title": "Gravity",
-      "concept": "Gravity is the invisible force that pulls objects toward each other. On Earth, it pulls everything down and gives objects a curved path when thrown.",
-      "goal": "Learn how gravity, launch angle, and initial power affect an object's trajectory.",
+      "concept": "Gravity is the invisible force that pulls objects toward each other. On Earth, it pulls everything down.",
+      "goal": "Learn how gravity, launch angle, and power affect an object's curved path.",
       "animation": "gravity",
-      "formula": "g ≈ 9.8 m/s²"
+      "formula": "g ≈ 9.8 m/s²",
+      "quiz": {
+        "question": "What is the force that pulls a thrown ball back to Earth?",
+        "options": ["Magnetism", "Friction", "Gravity"],
+        "answer": "Gravity"
+      }
     },
     "energy": {
       "title": "Energy",
-      "concept": "Energy can't be created or destroyed, only transformed! Watch it change from Potential Energy (stored, due to height) to Kinetic Energy (motion).",
-      "goal": "Visualize energy conservation and understand the trade-off between speed and height.",
+      "concept": "Energy transforms from Potential (stored) to Kinetic (motion). The total energy stays the same!",
+      "goal": "Visualize energy conservation on a roller coaster as it trades height for speed.",
       "animation": "energy",
-      "formula": "PE + KE = Constant"
+      "formula": "PE + KE = Constant",
+       "quiz": {
+        "question": "When a roller coaster is at the very top of a hill, it has the most...?",
+        "options": ["Kinetic Energy", "Potential Energy", "Sound Energy"],
+        "answer": "Potential Energy"
+      }
     },
     "friction": {
       "title": "Friction",
-      "concept": "Friction is a force that slows things down when surfaces rub against each other. It turns motion energy into heat.",
-      "goal": "See how different surface textures create more or less friction, affecting how far an object slides.",
+      "concept": "Friction is a force that slows things down when surfaces rub together.",
+      "goal": "See how different surfaces (like ice or sandpaper) create more or less friction.",
       "animation": "friction",
-      "formula": "F_f ∝ Surface Texture"
-    },
-    "light_and_reflection": {
-      "title": "Light & Reflection",
-      "concept": "Light travels in straight lines. When it hits a shiny surface like a mirror, it bounces off at the same angle it hit.",
-      "goal": "Master the law of reflection (angle of incidence = angle of reflection) to solve puzzles.",
-      "animation": "light_and_reflection",
-      "formula": "∠i = ∠r"
-    },
-    "sound_waves": {
-      "title": "Sound Waves",
-      "concept": "Sound travels as invisible vibrations (waves) through the air. The shape of the wave determines what we hear.",
-      "goal": "Understand how frequency affects pitch (how high or low a sound is) and amplitude affects loudness.",
-      "animation": "sound_waves",
-      "formula": "Pitch ∝ Frequency"
-    },
-    "simple_machines": {
-      "title": "Simple Machines",
-      "concept": "Simple machines like levers, pulleys, and ramps make work easier by changing the direction or magnitude of a force.",
-      "goal": "Discover how to use simple machines to gain a mechanical advantage and lift heavy objects with less effort.",
-      "animation": "simple_machines",
-      "formula": "Work = Force × Distance"
+      "formula": "F_f ∝ Surface Texture",
+       "quiz": {
+        "question": "Which surface would have the MOST friction?",
+        "options": ["Ice", "Wood", "Sandpaper"],
+        "answer": "Sandpaper"
+      }
     },
     "electricity": {
       "title": "Electricity",
-      "concept": "Electricity is the flow of tiny particles called electrons. For them to flow, they need a complete, unbroken path called a circuit.",
-      "goal": "Learn the components of a simple circuit (power, path, load) and how to build one.",
+      "concept": "Electricity is the flow of electrons. For them to flow, they need a complete path called a circuit.",
+      "goal": "Learn the parts of a simple circuit and how to connect them to light a bulb.",
       "animation": "electricity",
-      "formula": "V = I × R"
+      "formula": "V = I × R",
+       "quiz": {
+        "question": "To light a bulb with a battery, you need a complete...?",
+        "options": ["Circle", "Circuit", "Line"],
+        "answer": "Circuit"
+      }
     },
     "magnetism": {
       "title": "Magnetism",
-      "concept": "Magnets have two poles (North and South). Opposite poles attract, while like poles repel. This creates an invisible magnetic field.",
-      "goal": "Use the forces of attraction and repulsion to navigate and understand magnetic fields.",
+      "concept": "Magnets have two poles (North and South). Opposite poles attract, while like poles repel.",
+      "goal": "Use the forces of attraction and repulsion to move a ball through a maze.",
       "animation": "magnetism",
-      "formula": "Opposites Attract"
-    },
-    "pressure_and_buoyancy": {
-      "title": "Pressure & Buoyancy",
-      "concept": "An object in water is pushed upward by a buoyant force. If this force is greater than the object's weight, it floats!",
-      "goal": "Explore how an object's density and shape determine whether it will sink or float (Archimedes' Principle).",
-      "animation": "pressure_and_buoyancy",
-      "formula": "F_b > Weight → Float"
+      "formula": "Opposites Attract",
+      "quiz": {
+        "question": "If you bring two 'North' poles of a magnet together, they will...?",
+        "options": ["Attract (pull together)", "Repel (push apart)", "Get hot"],
+        "answer": "Repel (push apart)"
+      }
     }
   },
   "chemistry": {

@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import json
-from datetime import datetime
 import uuid
 import os
 
@@ -19,7 +18,7 @@ def index():
         session['user_id'] = str(uuid.uuid4())
     return render_template('index.html')
 
-# --- NEW UNIFIED ROUTES FOR TOPICS ---
+# --- UNIFIED ROUTES FOR TOPICS ---
 @app.route('/physics')
 def physics():
     return render_template('physics.html')
@@ -36,15 +35,9 @@ def biology():
 def astronomy():
     return render_template('astronomy.html')
 
-# --- REDIRECTS for old physics routes to prevent 404 errors ---
-@app.route('/motion')
-@app.route('/energy')
-@app.route('/electricity')
-@app.route('/matter')
-@app.route('/waves')
-def redirect_to_physics():
-    return redirect(url_for('physics'))
-
+@app.route('/scientists')
+def scientists():
+    return render_template('scientists.html')
 
 # --- API ROUTES ---
 @app.route('/get_concepts/<topic>')
@@ -56,6 +49,16 @@ def get_concepts(topic):
             return jsonify(all_concepts.get(topic, {}))
     except FileNotFoundError:
         return jsonify({"error": "Concepts file not found"}), 404
+
+@app.route('/get_scientists')
+def get_scientists():
+    try:
+        json_path = os.path.join(BASE_DIR, 'data', 'scientists.json')
+        with open(json_path, 'r') as f:
+            scientists_data = json.load(f)
+            return jsonify(scientists_data)
+    except FileNotFoundError:
+        return jsonify({"error": "Scientists file not found"}), 404
 
 @app.route('/save_user', methods=['POST'])
 def save_user():
@@ -96,11 +99,12 @@ def update_progress():
         score = data.get('score', 10)
 
         if topic and topic in user_data[user_id]['progress']:
-            user_data[user_id]['progress'][topic]['score'] += score
-            user_data[user_id]['progress'][topic]['completed'] += 1
-            user_data[user_id]['total_score'] += score
-            
-            update_leaderboard(user_id, user_data[user_id]['name'], user_data[user_id]['total_score'])
+            # Prevent completed count from exceeding total
+            if user_data[user_id]['progress'][topic]['completed'] < user_data[user_id]['progress'][topic]['total']:
+                user_data[user_id]['progress'][topic]['score'] += score
+                user_data[user_id]['progress'][topic]['completed'] += 1
+                user_data[user_id]['total_score'] += score
+                update_leaderboard(user_id, user_data[user_id]['name'], user_data[user_id]['total_score'])
             
             return jsonify({"status": "success", "new_total_score": user_data[user_id]['total_score']})
     
@@ -133,4 +137,3 @@ def update_leaderboard(user_id, name, score):
 
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -141,6 +141,14 @@ class MotionPageManager {
             feedbackEl.style.color = 'var(--success)';
             window.audioManager.play('success');
             this.markConceptAsCompleted(conceptKey);
+            
+            // Send progress update to the backend
+            fetch('/update_progress', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic: 'motion', score: 10 })
+            });
+
         } else {
             selectedOption.classList.add('incorrect');
             feedbackEl.textContent = 'Not quite! The correct answer is highlighted.';
@@ -152,6 +160,7 @@ class MotionPageManager {
     }
 
     markConceptAsCompleted(conceptKey) {
+        if (this.completedConcepts.has(conceptKey)) return; // Don't award points twice
         this.completedConcepts.add(conceptKey);
         const progress = (this.completedConcepts.size / this.conceptKeys.length) * 100;
         this.elements.progressBar.style.width = `${progress}%`;
