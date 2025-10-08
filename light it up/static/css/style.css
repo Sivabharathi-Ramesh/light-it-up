@@ -39,7 +39,7 @@ body {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px 20px; /* Top padding is now 0 */
+    padding: 0 20px 20px;
 }
 
 /* Audio Controls */
@@ -995,3 +995,123 @@ footer { text-align: center; padding: 20px; margin-top: 30px; font-size: 0.9rem;
     0% { transform: translateY(5px); }
     100% { transform: translateY(-5px); }
 }
+
+/* === NEW: ATOM BUILDER SIMULATION STYLES === */
+.atom-builder-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: "info display" "bins display";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto 1fr;
+    gap: 15px;
+}
+.atom-display {
+    grid-area: display;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.atom-info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 10px;
+}
+.particle-bins {
+    grid-area: bins;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+}
+.bin {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+    position: relative;
+}
+.bin:hover { background: rgba(255,255,255,0.2); }
+.bin .add-btn {
+    position: absolute;
+    top: 5px; right: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.proton-bin { border-left: 4px solid #e74c3c; }
+.neutron-bin { border-left: 4px solid #95a5a6; }
+.electron-bin { border-left: 4px solid #3498db; }
+
+.nucleus {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    z-index: 2;
+}
+.electron-orbits {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.orbit {
+    position: absolute;
+    top: 50%; left: 50%;
+    border: 2px dashed rgba(255,255,255,0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.orbit-1 { width: 120px; height: 120px; animation: spin 20s linear infinite;}
+.orbit-2 { width: 180px; height: 180px; animation: spin 30s linear infinite reverse;}
+
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.atom-display .particle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.atom-display .particle:hover { transform: scale(1.2); }
+.atom-display .proton { background: radial-gradient(circle at 30% 30%, #ff7675, #d63031); }
+.atom-display .neutron { background: radial-gradient(circle at 30% 30%, #dfe6e9, #b2bec3); }
+.atom-display .electron { 
+    background: radial-gradient(circle at 30% 30%, #74b9ff, #0984e3); 
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+.element-display {
+    width: 100px;
+    height: 100px;
+    border: 3px solid var(--energy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+}
+.element-symbol { font-size: 2.5rem; font-weight: bold; }
+.element-name { font-size: 0.9rem; }
+.charge-display, .mass-display { font-size: 1.1rem; font-weight: bold; }
