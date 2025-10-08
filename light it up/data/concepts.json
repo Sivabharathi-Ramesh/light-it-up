@@ -10,13 +10,24 @@
     "wave": { "title": "Wave", "concept": "Content coming soon!", "goal": "Explore different types of waves.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "atoms": { "title": "Atoms", "concept": "Content coming soon!", "goal": "Explore the building blocks of matter.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "centrifugal_force": { "title": "Centrifugal Force", "concept": "Content coming soon!", "goal": "Explore outward-feeling force.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "momentum": { "title": "Momentum", "concept": "Content coming soon!", "goal": "Explore mass in motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
+  "momentum": { "title": "Momentum", "concept": "Momentum measures how hard it is to stop a moving object. It's the product of mass and velocity (p = m * v).", "goal": "See how mass and speed affect collisions and learn conservation of momentum with simple colliding carts.", "animation": "momentum_collision", "quiz": { "question": "If a heavy truck and a light car move at the same speed, which has more momentum?", "options": ["The truck", "The car", "Both the same"], "answer": "The truck"}},
     "general_relativity": { "title": "General Relativity", "concept": "Content coming soon!", "goal": "Explore gravity and spacetime.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "motion": { "title": "Motion", "concept": "Content coming soon!", "goal": "Explore how things move.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "magnetism": { "title": "Magnetism", "concept": "Content coming soon!", "goal": "Explore magnetic forces.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "thermodynamics": { "title": "Thermodynamics", "concept": "Content coming soon!", "goal": "Explore energy, heat, and work.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "conservation_of_energy": { "title": "Conservation of Energy", "concept": "Content coming soon!", "goal": "Explore how energy is transferred.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "electricity": { "title": "Electricity", "concept": "Content coming soon!", "goal": "Explore circuits and charges.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
+    "electric_circuits": {
+      "title": "Electric Circuits",
+      "concept": "An electric circuit is a closed path that allows electric current to flow. Circuits contain sources (like batteries), conductors (wires), and loads (like bulbs or resistors).",
+      "goal": "Build simple series and parallel circuits and observe how current and voltage behave.",
+      "animation": "wire_spark",
+      "quiz": {
+        "question": "In a simple series circuit with two identical bulbs, if one bulb is removed, what happens to the other bulb?",
+        "options": ["It gets brighter", "It goes out", "It stays the same"],
+        "answer": "It goes out"
+      }
+    },
     "electromagnetic_radiation": { "title": "Electromagnetic Radiation", "concept": "Content coming soon!", "goal": "Explore light, radio, and X-rays.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "electromagnetism": { "title": "Electromagnetism", "concept": "Content coming soon!", "goal": "Explore the link between electricity and magnetism.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "fluids": { "title": "Fluids", "concept": "Content coming soon!", "goal": "Explore liquids and gases.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
@@ -29,11 +40,35 @@
     "atoms": { "title": "Atoms", "definition": "Atoms are the tiny, fundamental building blocks of everything!", "example": "A single drop of water contains billions of water molecules.", "animation": "atom", "quiz": { "question": "What are the main particles inside an atom?", "options": ["Protons, Neutrons, Electrons", "Pancakes, Noodles, Eggs"], "answer": "Protons, Neutrons, Electrons"}},
     "states_of_matter": { "title": "States of Matter", "definition": "Matter usually exists in three states: solid, liquid, or gas.", "example": "Ice (solid) melts into water (liquid).", "animation": "states_of_matter", "quiz": { "question": "An ice cream cone in the sun turns from a solid into a...?", "options": ["Gas", "Liquid", "Solid"], "answer": "Liquid"}},
     "chemical_reactions": { "title": "Chemical Reactions", "definition": "A chemical reaction transforms substances into new ones.", "example": "Baking a cake is a chemical reaction.", "animation": "chemical_reaction", "quiz": { "question": "What happens when you mix baking soda and vinegar?", "options": ["It gets cold", "It fizzes and creates a gas", "Nothing happens"], "answer": "It fizzes and creates a gas"}}
+    ,
+    "periodic_table": {
+      "title": "Periodic Table",
+      "definition": "The periodic table organizes all known chemical elements by increasing atomic number and recurring chemical properties.",
+      "example": "Hydrogen (H) is the simplest element and is at the top-left of the table.",
+      "animation": "periodic_table",
+      "quiz": {
+        "question": "Which element has the atomic number 1?",
+        "options": ["Helium", "Hydrogen", "Oxygen"],
+        "answer": "Hydrogen"
+      }
+    }
   },
   "biology": {
     "cells": { "title": "Cells", "definition": "Cells are the basic building blocks of all living things.", "example": "Your body is made of trillions of cells!", "animation": "cell", "quiz": { "question": "What is the 'brain' of the cell called?", "options": ["Mitochondria", "Nucleus", "Ribosome"], "answer": "Nucleus"}},
     "photosynthesis": { "title": "Photosynthesis", "definition": "Plants use sunlight to create their own food.", "example": "A sunflower turns its face to the sun to get energy.", "animation": "photosynthesis", "quiz": { "question": "What do plants release that is essential for humans?", "options": ["Carbon Dioxide", "Oxygen", "Sugar"], "answer": "Oxygen"}},
     "ecosystems": { "title": "Ecosystems", "definition": "An ecosystem is a community of living things interacting with their environment.", "example": "A coral reef is a vibrant ecosystem.", "animation": "ecosystem", "quiz": { "question": "Which of these is NOT an ecosystem?", "options": ["A desert", "A plastic bottle", "A pond"], "answer": "A plastic bottle"}}
+    ,
+    "dna": {
+      "title": "DNA",
+      "definition": "DNA (deoxyribonucleic acid) carries the genetic instructions used in growth, development, functioning, and reproduction of organisms.",
+      "example": "DNA makes each individual unique — it's why siblings can look different.",
+      "animation": "dna_double_helix",
+      "quiz": {
+        "question": "What does DNA primarily store?",
+        "options": ["Energy", "Genetic information", "Water"],
+        "answer": "Genetic information"
+      }
+    }
   },
   "astronomy": {
     "solar_system": { "title": "The Solar System", "definition": "Our solar system is made up of the Sun and the planets that orbit it.", "example": "Jupiter is the largest planet in our solar system.", "animation": "solar_system", "quiz": { "question": "Which planet is famous for its beautiful rings?", "options": ["Mars", "Saturn", "Venus"], "answer": "Saturn"}},

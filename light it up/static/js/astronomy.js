@@ -93,26 +93,31 @@ class AstronomyPageManager {
     }
 
     displayQuiz(key, concept) {
-        const quiz = concept.quiz;
-        if (!quiz) {
-            this.elements.quiz.innerHTML = '<div style="text-align:center; padding-top: 50px;">No quiz for this one!</div>';
-            return;
+        // Use ConceptToolkit for consistent quizzes
+        if (window.ConceptToolkit) {
+            ConceptToolkit.renderQuiz(this.elements.quiz, concept.quiz, () => {
+                // progress hook (optional)
+                // fetch('/update_progress', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({topic: 'astronomy', score: 10}) });
+            });
+        } else {
+            const quiz = concept.quiz;
+            if (!quiz) {
+                this.elements.quiz.innerHTML = '<div style="text-align:center; padding-top: 50px;">No quiz for this one!</div>';
+                return;
+            }
+            const optionsHtml = quiz.options.map(option => 
+                `<div class="quiz-option" data-answer="${option}">${option}</div>`
+            ).join('');
+            this.elements.quiz.innerHTML = `
+                <h3>Game Time! 🧠</h3>
+                <p class="quiz-question">${quiz.question}</p>
+                <div class="quiz-options">${optionsHtml}</div>
+                <div class="quiz-feedback"></div>
+            `;
+            this.elements.quiz.querySelectorAll('.quiz-option').forEach(optionEl => {
+                optionEl.addEventListener('click', (e) => this.handleQuizAnswer(e, key, quiz.answer));
+            });
         }
-
-        const optionsHtml = quiz.options.map(option => 
-            `<div class="quiz-option" data-answer="${option}">${option}</div>`
-        ).join('');
-
-        this.elements.quiz.innerHTML = `
-            <h3>Game Time! 🧠</h3>
-            <p class="quiz-question">${quiz.question}</p>
-            <div class="quiz-options">${optionsHtml}</div>
-            <div class="quiz-feedback"></div>
-        `;
-
-        this.elements.quiz.querySelectorAll('.quiz-option').forEach(optionEl => {
-            optionEl.addEventListener('click', (e) => this.handleQuizAnswer(e, key, quiz.answer));
-        });
     }
 
     handleQuizAnswer(event, conceptKey, correctAnswer) {

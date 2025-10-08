@@ -94,24 +94,10 @@ class ChemistryPageManager {
 
     displayQuiz(key, concept) {
         const quiz = concept.quiz;
-        if (!quiz) {
-            this.elements.quiz.innerHTML = '<div style="text-align:center; padding-top: 50px;">No quiz for this one!</div>';
-            return;
-        }
-
-        const optionsHtml = quiz.options.map(option => 
-            `<div class="quiz-option" data-answer="${option}">${option}</div>`
-        ).join('');
-
-        this.elements.quiz.innerHTML = `
-            <h3>Game Time! 🧠</h3>
-            <p class="quiz-question">${quiz.question}</p>
-            <div class="quiz-options">${optionsHtml}</div>
-            <div class="quiz-feedback"></div>
-        `;
-
-        this.elements.quiz.querySelectorAll('.quiz-option').forEach(optionEl => {
-            optionEl.addEventListener('click', (e) => this.handleQuizAnswer(e, key, quiz.answer));
+        // Use ConceptToolkit to render quizzes (makes UI consistent)
+        ConceptToolkit.renderQuiz(this.elements.quiz, quiz, () => {
+            // optional: award progress via backend for chemistry (if desired)
+            // fetch('/update_progress', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({topic: 'chemistry', score: 10}) });
         });
     }
 
@@ -149,6 +135,49 @@ class ChemistryPageManager {
         this.loadConceptByIndex((this.currentConceptIndex + 1) % this.conceptKeys.length);
     }
 
+    // Try to load a Lottie animation JSON from static/animations/<name>.json
+    async loadLottie(container, animName) {
+        if (!animName) return false;
+        // Fallback map: map requested names to existing animations when possible
+        const fallbackMap = {
+            'periodic_table': 'bulb_glow',
+            'dna_double_helix': 'bulb_glow',
+            'momentum_collision': 'wire_spark',
+            'energy': 'bulb_glow',
+            'gravity': 'wire_spark'
+        };
+
+        const tryLoad = async (name) => {
+            const animPath = `/static/animations/${name}.json`;
+            try {
+                const res = await fetch(animPath, { method: 'HEAD' });
+                if (!res.ok) return false;
+                const player = document.createElement('lottie-player');
+                player.setAttribute('src', animPath);
+                player.setAttribute('background', 'transparent');
+                player.setAttribute('speed', '1');
+                player.setAttribute('loop', 'true');
+                player.setAttribute('autoplay', 'true');
+                player.style.width = '100%';
+                player.style.maxWidth = '500px';
+                container.appendChild(player);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        // Try requested name first
+        if (await tryLoad(animName)) return true;
+
+        // Try fallback
+        if (fallbackMap[animName]) {
+            return await tryLoad(fallbackMap[animName]);
+        }
+
+        return false;
+    }
+
     startSimulation(type) {
         const container = this.elements.simulation;
         container.innerHTML = ''; 
@@ -157,7 +186,12 @@ class ChemistryPageManager {
             case 'atom': this.atomSimulation(container); break;
             case 'states_of_matter': this.statesOfMatterSimulation(container); break;
             case 'chemical_reaction': this.chemicalReactionSimulation(container); break;
-            default: container.innerHTML = `<p>Coming soon!</p>`;
+            default:
+                (async () => {
+                    const loaded = await this.loadLottie(container, type);
+                    if (!loaded) container.innerHTML = `<p>Coming soon!</p>`;
+                })();
+                break;
         }
     }
 

@@ -7,15 +7,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lottie web player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     {% block head %}{% endblock %}
 </head>
 <body>
+    <div id="animatedBackground" aria-hidden="true"></div>
+
     <div class="container">
         <header>
             <h1><i class="fas-solid fa-atom"></i> Science Playground <i class="fas fa-rocket"></i></h1>
         </header>
 
-        {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
         <footer>
             <p>Science Playground - Where Future Scientists Are Born!</p>
@@ -25,6 +29,27 @@
 
     <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='js/audio.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/concept_toolkit.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+    <script>
+        // Add a small header control to toggle background motion (accessible)
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const header = document.querySelector('header');
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-sm';
+                btn.style.marginLeft = '12px';
+                btn.textContent = 'Toggle Motion';
+                btn.setAttribute('aria-pressed', 'false');
+                btn.onclick = () => {
+                    window.KidsBackground && window.KidsBackground.toggleReducedMotion();
+                    const pressed = btn.getAttribute('aria-pressed') === 'true';
+                    btn.setAttribute('aria-pressed', String(!pressed));
+                };
+                header.appendChild(btn);
+            } catch (e) { console.error(e); }
+        });
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

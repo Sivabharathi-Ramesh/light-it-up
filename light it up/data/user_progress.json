@@ -4,12 +4,12 @@
       "id": "2cf01f8a-f698-4998-8c27-c17480aa730e",
       "name": "siva",
       "grade": 1,
-      "total_score": 10,
+      "total_score": 0,
       "progress": {
         "physics": {
-          "completed": 1,
+          "completed": 0,
           "total": 10,
-          "score": 10
+          "score": 0
         },
         "chemistry": {
           "completed": 0,
@@ -33,7 +33,7 @@
     {
       "id": "2cf01f8a-f698-4998-8c27-c17480aa730e",
       "name": "siva",
-      "score": 10
+      "score": 0
     }
   ]
 }
