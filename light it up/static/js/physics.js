@@ -183,7 +183,7 @@ class PhysicsPageManager {
                 </li>
                  <li style="animation-delay: 0.6s">
                     <div class="formula-part">R <span class="icon">🚧</span></div>
-                    <div class.formula-desc">Resistance (what slows it down)</div>
+                    <div class="formula-desc">Resistance (what slows it down)</div>
                 </li>
             `;
 
@@ -260,8 +260,8 @@ class PhysicsPageManager {
     
     electricityGame(container, concept) {
         container.innerHTML = `
-            <div class="game-area">
-              <div id="lottie-container" style="width: 150px; height: 150px; position: absolute; top: 100px; right: 50px;"></div>
+            <div class="game-area" style="position: relative;">
+              <div id="lottie-container" style="width: 150px; height: 150px; position: absolute; top: 75px; right: 20px; pointer-events: none;"></div>
               <canvas id="circuitGame" width="500" height="300"></canvas>
               <button id="switchBtn" class="btn btn-primary">Switch: OFF</button>
             </div>
@@ -271,56 +271,114 @@ class PhysicsPageManager {
         const ctx = c.getContext("2d");
         const lottieContainer = container.querySelector("#lottie-container");
         let circuitOn = false;
+        let chargePos = 0;
 
         const switchBtn = container.querySelector("#switchBtn");
         switchBtn.onclick = ()=>{
           circuitOn = !circuitOn;
           switchBtn.innerText = "Switch: " + (circuitOn ? "ON" : "OFF");
+          switchBtn.classList.toggle('btn-success', circuitOn);
+          
+          lottieContainer.innerHTML = ''; // Clear the container first
+          
           if (circuitOn) {
               this.tryLoadLottie(lottieContainer, concept.animation);
           } else {
-              lottieContainer.innerHTML = '';
+              lottieContainer.innerHTML = '<img src="/static/images/bulb_off.png" alt="Bulb off" style="width: 100%; height: 100%;">';
           }
         };
 
+        // Initial state
+        lottieContainer.innerHTML = '<img src="/static/images/bulb_off.png" alt="Bulb off" style="width: 100%; height: 100%;">';
+
         const drawCircuit = () => {
-          if (!this.elements.contentGrid.contains(c)) {
-              if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-              return;
-          }
+            if (!this.elements.contentGrid.contains(c)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
           ctx.clearRect(0,0,500,300);
+          const bulbX = 400;
+          const bulbY = 150;
+          
           // battery
           ctx.fillStyle = "#f44336";
-          ctx.fillRect(50,120,40,60);
+          ctx.fillRect(50, 130, 40, 60);
+          ctx.fillStyle = "#333";
+          ctx.fillRect(50, 125, 40, 5);
+          ctx.fillRect(70, 120, 5, 5);
           ctx.fillStyle = "#fff";
           ctx.font = "16px 'Comic Sans MS'";
-          ctx.fillText("Battery", 35, 200);
+          ctx.fillText("Battery", 45, 210);
           
           // wires
+          ctx.strokeStyle = "#95a5a6";
+          ctx.lineWidth = 4;
           ctx.beginPath();
-          ctx.moveTo(90,150);
-          ctx.lineTo(200,150);
-          ctx.moveTo(350,150);
-          ctx.lineTo(lottieContainer.offsetLeft - 25, 150); // Connect to bulb
-          ctx.moveTo(90,150);
-          ctx.lineTo(90,200);
-          ctx.lineTo(lottieContainer.offsetLeft - 25, 200); // Connect to bulb
-          ctx.strokeStyle = "#fff";
-          ctx.lineWidth = 3;
+          ctx.moveTo(90, 160); // From battery
+          ctx.lineTo(200, 160); // To switch
+          ctx.moveTo(270, 160); // From switch
+          ctx.lineTo(bulbX - 40, 160); // To bulb
+          
+          ctx.moveTo(90, 160);
+          ctx.lineTo(90, 250);
+          ctx.lineTo(bulbX + 40, 250);
+          ctx.lineTo(bulbX + 40, 160);
           ctx.stroke();
+
+          // Switch terminals
+          ctx.fillStyle = "#bdc3c7";
+          ctx.beginPath();
+          ctx.arc(200, 160, 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(270, 160, 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Switch arm
+          ctx.save();
+          ctx.translate(200, 160);
+          if (!circuitOn) {
+            ctx.rotate(-Math.PI / 6);
+          }
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(70, 0);
+          ctx.stroke();
+          ctx.restore();
+
 
           // current animation
           if (circuitOn){
-            for(let i=100; i < lottieContainer.offsetLeft - 30; i+=30){
-              ctx.beginPath();
-              ctx.arc(i,150,5,0,Math.PI*2);
-              ctx.fillStyle="#00e5ff";
-              ctx.fill();
+            chargePos = (chargePos + 1) % 40;
+            ctx.fillStyle="#00e5ff";
+            // Top wire
+            for(let i=chargePos; i < (bulbX - 40 - 90); i+=40){
+                ctx.beginPath();
+                ctx.arc(90 + i, 160, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            // Bottom wire
+            let bottomPathLength = (bulbX + 40 - 90) + (250-160)*2;
+             for(let i=chargePos; i < bottomPathLength; i+=40){
+                let x, y;
+                if (i < 90) { // down
+                    x = 90; y = 160 + i;
+                } else if (i < 90 + (bulbX + 40 - 90)) { // across
+                    x = 90 + (i-90); y = 250;
+                } else { // up
+                    x = bulbX + 40; y = 250 - (i - (90 + (bulbX + 40 - 90)));
+                }
+
+                if (y > 150) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
           }
 
           ctx.fillStyle="#fff";
-          ctx.fillText("Electricity flows only when the circuit is closed!", 100, 270);
+          ctx.fillText("Electricity flows only when the circuit is closed!", 100, 280);
           this.animationFrameId = requestAnimationFrame(drawCircuit);
         }
         drawCircuit();
