@@ -23,23 +23,26 @@
         <div class="progress-bar" id="topicProgressBar" style="width: 0%"></div>
     </div>
 
-    <div class="topic-content-grid" id="topicContentGrid" style="display: none;">
-        <div class="concept-explanation" id="conceptExplanation">
-        </div>
-
-        <div class="simulation-area" id="simulationArea">
-        </div>
-
-        <div class="fun-formula-area" id="funFormulaArea">
-        </div>
-
-        <div class="quiz-container" id="quizContainer">
-        </div>
+    <div class="topic-content-grid" id="topicContentGrid" style="display: none; position: relative;">
+        <button class="btn btn-secondary btn-sm btn-small" id="backToConceptsButton" style="position: absolute; top: 10px; right: 10px; display: none; z-index: 2;">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="concept-explanation" id="conceptExplanation"></div>
+        <div class="simulation-area" id="simulationArea"></div>
+        <div class="fun-formula-area" id="funFormulaArea"></div>
+        <div class="quiz-container" id="quizContainer"></div>
     </div>
     
     <div class="game-controls">
         <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Menu</a>
         <button class="btn btn-success" id="nextConceptButton" style="display: none;">Next Game <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <div class="cartoon-instructor-container">
+        <img src="{{ url_for('static', filename='images/professor.svg') }}" alt="Cartoon Instructor" class="cartoon-instructor">
+        <div class="cartoon-speech-bubble">
+            👋 Hi! Hover over a box to hear its name, and click to start exploring!
+        </div>
     </div>
 </div>
 {% endblock %}

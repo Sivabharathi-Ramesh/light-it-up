@@ -1,14 +1,18 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session
 import json
 import uuid
 import os
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder='static',
+    template_folder='templates'
+)
 app.secret_key = 'science_playground_secret_key_2024'
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-# In-memory storage (for demonstration)
+# In-memory storage (for demonstration, NOT thread-safe for production)
 user_data = {}
 leaderboard = []
 
@@ -46,9 +50,14 @@ def get_concepts(topic):
         json_path = os.path.join(BASE_DIR, 'data', 'concepts.json')
         with open(json_path, 'r') as f:
             all_concepts = json.load(f)
-            return jsonify(all_concepts.get(topic, {}))
+            if topic in all_concepts:
+                return jsonify(all_concepts[topic])
+            else:
+                return jsonify({"error": "Topic not found"}), 404
     except FileNotFoundError:
         return jsonify({"error": "Concepts file not found"}), 404
+    except json.JSONDecodeError:
+        return jsonify({"error": "Concepts file is corrupted"}), 500
 
 @app.route('/get_scientists')
 def get_scientists():
@@ -59,6 +68,8 @@ def get_scientists():
             return jsonify(scientists_data)
     except FileNotFoundError:
         return jsonify({"error": "Scientists file not found"}), 404
+    except json.JSONDecodeError:
+        return jsonify({"error": "Scientists file is corrupted"}), 500
 
 @app.route('/save_user', methods=['POST'])
 def save_user():
@@ -66,7 +77,7 @@ def save_user():
     user_id = session.get('user_id')
     if not user_id or not data.get('name'):
         return jsonify({"status": "error", "message": "Invalid data"}), 400
-    
+
     user_data[user_id] = {
         'id': user_id,
         'name': data['name'],
@@ -93,7 +104,7 @@ def get_user_data():
 def update_progress():
     data = request.json
     user_id = session.get('user_id')
-    
+
     if user_id and user_id in user_data:
         topic = data.get('topic')
         score = data.get('score', 10)
@@ -105,35 +116,34 @@ def update_progress():
                 user_data[user_id]['progress'][topic]['completed'] += 1
                 user_data[user_id]['total_score'] += score
                 update_leaderboard(user_id, user_data[user_id]['name'], user_data[user_id]['total_score'])
-            
+
             return jsonify({"status": "success", "new_total_score": user_data[user_id]['total_score']})
-    
+
     return jsonify({"status": "error", "message": "User or topic not found"}), 404
 
 @app.route('/get_leaderboard')
-def get_leaderboard():
-    sorted_leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
-    return jsonify(sorted_leaderboard[:10])
+def get_leaderboard_api():
+    # Only return top 10, already sorted in update_leaderboard
+    return jsonify(leaderboard[:10])
 
 def update_leaderboard(user_id, name, score):
     global leaderboard
-    
+
     user_found = False
     for entry in leaderboard:
         if entry['id'] == user_id:
             entry['score'] = score
             user_found = True
             break
-    
+
     if not user_found:
         leaderboard.append({
             'id': user_id,
             'name': name,
             'score': score
         })
-    
-    leaderboard.sort(key=lambda x: x['score'], reverse=True)
 
+    leaderboard.sort(key=lambda x: x['score'], reverse=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
