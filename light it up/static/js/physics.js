@@ -174,22 +174,22 @@ class PhysicsPageManager {
         } else if (key === 'electric_circuits' || key === 'electricity') {
             const breakdownHtml = `
                 <li style="animation-delay: 0.2s">
-                    <div class="formula-part">V <span class="icon">🔋</span></div>
-                    <div class="formula-desc">Voltage (electrical pressure)</div>
+                    <div class="formula-part">F <span class="icon">⚡</span></div>
+                    <div class="formula-desc">Force</div>
                 </li>
                 <li style="animation-delay: 0.4s">
-                    <div class="formula-part">I <span class="icon">💧</span></div>
-                    <div class="formula-desc">Current (flow of electricity)</div>
+                    <div class="formula-part">q <span class="icon">➕</span></div>
+                    <div class="formula-desc">Charges</div>
                 </li>
                  <li style="animation-delay: 0.6s">
-                    <div class="formula-part">R <span class="icon">🚧</span></div>
-                    <div class="formula-desc">Resistance (what slows it down)</div>
+                    <div class="formula-part">r <span class="icon">📏</span></div>
+                    <div class="formula-desc">Distance</div>
                 </li>
             `;
 
             formulaContainer.innerHTML = `
                 <h3>The Secret Formula! 🤫</h3>
-                <div class="formula-display">V = I × R</div>
+                <div class="formula-display">F = k * (|q₁q₂| / r²)</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
         } else {
@@ -263,53 +263,71 @@ class PhysicsPageManager {
     staticElectricityGame(container) {
         container.innerHTML = `
             <div class="game-area">
-              <canvas id="staticGame" width="400" height="300"></canvas>
-              <button id="rubBtn" class="btn btn-primary">Rub the Balloon!</button>
+                <p>Choose charge types:</p>
+                <div class="game-controls" style="margin-bottom: 20px;">
+                    <button id="posBtn" class="btn btn-primary">+ Positive</button>
+                    <button id="negBtn" class="btn btn-danger">- Negative</button>
+                </div>
+              <canvas id="chargeCanvas" width="400" height="200"></canvas>
             </div>
         `;
 
-        const s = container.querySelector("#staticGame");
-        const sx = s.getContext("2d");
-        let charge = 0, stuck = false;
+        const c = container.querySelector("#chargeCanvas");
+        const cx = c.getContext("2d");
+        let chargeA = "+", chargeB = "+";
 
-        container.querySelector("#rubBtn").onclick = ()=>{
-          charge += 10;
-          if (charge > 50) stuck = true;
-        };
+        container.querySelector("#posBtn").onclick = ()=> { chargeB = "+"; };
+        container.querySelector("#negBtn").onclick = ()=> { chargeB = "-"; };
+        
+        const drawCharges = () => {
+            if (!this.elements.contentGrid.contains(c)) {
+                if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+            cx.clearRect(0,0,400,200);
+            cx.font = "24px 'Comic Sans MS'";
+            
+            cx.beginPath();
+            cx.arc(120,100,20,0,Math.PI*2);
+            cx.fillStyle="#00bcd4";
+            cx.fill();
+            cx.fillStyle="#fff";
+            cx.fillText(chargeA,112,108);
 
-        const drawBalloon = () => {
-          if (!this.elements.contentGrid.contains(s)) {
-              if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
-              return;
-          }
-          sx.clearRect(0,0,400,300);
-          // wall
-          sx.fillStyle="#607d8b";
-          sx.fillRect(300,0,20,300);
-          // balloon
-          sx.beginPath();
-          sx.arc(stuck ? 270 : 150,150,30,0,Math.PI*2);
-          sx.fillStyle="#ff4081";
-          sx.fill();
-          
-          // charge particles
-          if (charge > 0) {
-              for (let i = 0; i < charge; i+=5) {
-                sx.fillStyle = `rgba(255, 255, 0, ${Math.random() * 0.5 + 0.5})`;
-                sx.beginPath();
-                sx.arc((stuck ? 270 : 150) + (Math.random() - 0.5) * 40, 150 + (Math.random() - 0.5) * 40, 3, 0, Math.PI * 2);
-                sx.fill();
-              }
-          }
+            cx.beginPath();
+            cx.arc(280,100,20,0,Math.PI*2);
+            cx.fillStyle="#ff5252";
+            cx.fill();
+            cx.fillStyle="#fff";
+            cx.fillText(chargeB,272,108);
 
-          // text
-          sx.fillStyle="#fff";
-          sx.font = "16px 'Comic Sans MS'";
-          sx.textAlign = 'center';
-          sx.fillText(stuck ? "The balloon sticks — static electricity!" : "Rub to charge the balloon!", 200, 280);
-          this.animationFrameId = requestAnimationFrame(drawBalloon);
+            cx.strokeStyle="#fff";
+            cx.lineWidth = 3;
+            cx.font = "20px 'Comic Sans MS'";
+            cx.textAlign = 'center';
+            
+            if (chargeA === chargeB){
+                // Repel animation
+                cx.beginPath();
+                cx.moveTo(140, 100);
+                cx.quadraticCurveTo(200, 80, 260, 100);
+                cx.stroke();
+                cx.beginPath();
+                cx.moveTo(140, 100);
+                cx.quadraticCurveTo(200, 120, 260, 100);
+                cx.stroke();
+                cx.fillText("❌ Repel!",200,150);
+            } else {
+                // Attract animation
+                cx.beginPath();
+                cx.moveTo(140,100);
+                cx.lineTo(260,100);
+                cx.stroke();
+                cx.fillText("✅ Attract!",200,150);
+            }
+            this.animationFrameId = requestAnimationFrame(drawCharges);
         }
-        drawBalloon();
+        drawCharges();
     }
     
     electricityGame(container, concept) {

@@ -60,12 +60,12 @@
       "id": "e535905b-d330-442c-bdf4-59349cac2ece",
       "name": "nandita",
       "grade": 1,
-      "total_score": 20,
+      "total_score": 30,
       "progress": {
         "physics": {
-          "completed": 2,
+          "completed": 3,
           "total": 10,
-          "score": 20
+          "score": 30
         },
         "chemistry": {
           "completed": 0,
@@ -117,7 +117,7 @@
     {
       "id": "e535905b-d330-442c-bdf4-59349cac2ece",
       "name": "siva",
-      "score": 20
+      "score": 30
     },
     {
       "id": "2cf01f8a-f698-4998-8c27-c17480aa730e",
