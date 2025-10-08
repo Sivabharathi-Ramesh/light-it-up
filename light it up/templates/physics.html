@@ -39,14 +39,28 @@
     </div>
 
     <div class="cartoon-instructor-container">
-        <img src="{{ url_for('static', filename='images/professor.svg') }}" alt="Cartoon Instructor" class="cartoon-instructor">
+        <!-- 🔹 Replaced the static SVG with a Lottie animation container -->
+        <div id="cartoon-instructor" class="cartoon-instructor"></div>
         <div class="cartoon-speech-bubble">
-            👋 Hi! Hover over a box to hear its name, and click to start exploring!
+            Welcome to Physics! Let's explore the wonders of the universe together!
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<!-- 🔹 Added Lottie.js before your existing script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script>
+    // Load the Lottie animation for instructor
+    var instructorAnimation = lottie.loadAnimation({
+        container: document.getElementById('cartoon-instructor'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: "{{ url_for('static', filename='animations/professor.json') }}"  // ✅ Replace this path with your JSON file path
+    });
+</script>
+
 <script src="{{ url_for('static', filename='js/physics.js') }}"></script>
 {% endblock %}
