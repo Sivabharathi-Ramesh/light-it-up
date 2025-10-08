@@ -171,6 +171,27 @@ class PhysicsPageManager {
                 <div class="formula-display">PE + KE = Constant</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
+        } else if (key === 'electric_circuits') {
+            const breakdownHtml = `
+                <li style="animation-delay: 0.2s">
+                    <div class="formula-part">V <span class="icon">🔋</span></div>
+                    <div class="formula-desc">Voltage (electrical pressure)</div>
+                </li>
+                <li style="animation-delay: 0.4s">
+                    <div class="formula-part">I <span class="icon">💧</span></div>
+                    <div class="formula-desc">Current (flow of electricity)</div>
+                </li>
+                 <li style="animation-delay: 0.6s">
+                    <div class="formula-part">R <span class="icon">🚧</span></div>
+                    <div class.formula-desc">Resistance (what slows it down)</div>
+                </li>
+            `;
+
+            formulaContainer.innerHTML = `
+                <h3>The Secret Formula! 🤫</h3>
+                <div class="formula-display">V = I × R</div>
+                <ul class="formula-breakdown">${breakdownHtml}</ul>
+            `;
         } else {
             formulaContainer.innerHTML = '<p style="text-align:center; padding-top:50px;">No formula for this one!</p>';
         }
@@ -211,9 +232,8 @@ class PhysicsPageManager {
             case 'waves':
                 this.waveGame(gameContainer);
                 break;
-            case 'electricity':
             case 'electric_circuits':
-                this.electricityGame(gameContainer);
+                this.electricityGame(gameContainer, concept);
                 break;
             case 'newtons_laws_of_motion':
             case 'force':
@@ -237,6 +257,74 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    
+    electricityGame(container, concept) {
+        container.innerHTML = `
+            <div class="game-area">
+              <div id="lottie-container" style="width: 150px; height: 150px; position: absolute; top: 100px; right: 50px;"></div>
+              <canvas id="circuitGame" width="500" height="300"></canvas>
+              <button id="switchBtn" class="btn btn-primary">Switch: OFF</button>
+            </div>
+        `;
+        
+        const c = container.querySelector("#circuitGame");
+        const ctx = c.getContext("2d");
+        const lottieContainer = container.querySelector("#lottie-container");
+        let circuitOn = false;
+
+        const switchBtn = container.querySelector("#switchBtn");
+        switchBtn.onclick = ()=>{
+          circuitOn = !circuitOn;
+          switchBtn.innerText = "Switch: " + (circuitOn ? "ON" : "OFF");
+          if (circuitOn) {
+              this.tryLoadLottie(lottieContainer, concept.animation);
+          } else {
+              lottieContainer.innerHTML = '';
+          }
+        };
+
+        const drawCircuit = () => {
+          if (!this.elements.contentGrid.contains(c)) {
+              if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+              return;
+          }
+          ctx.clearRect(0,0,500,300);
+          // battery
+          ctx.fillStyle = "#f44336";
+          ctx.fillRect(50,120,40,60);
+          ctx.fillStyle = "#fff";
+          ctx.font = "16px 'Comic Sans MS'";
+          ctx.fillText("Battery", 35, 200);
+          
+          // wires
+          ctx.beginPath();
+          ctx.moveTo(90,150);
+          ctx.lineTo(200,150);
+          ctx.moveTo(350,150);
+          ctx.lineTo(lottieContainer.offsetLeft - 25, 150); // Connect to bulb
+          ctx.moveTo(90,150);
+          ctx.lineTo(90,200);
+          ctx.lineTo(lottieContainer.offsetLeft - 25, 200); // Connect to bulb
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 3;
+          ctx.stroke();
+
+          // current animation
+          if (circuitOn){
+            for(let i=100; i < lottieContainer.offsetLeft - 30; i+=30){
+              ctx.beginPath();
+              ctx.arc(i,150,5,0,Math.PI*2);
+              ctx.fillStyle="#00e5ff";
+              ctx.fill();
+            }
+          }
+
+          ctx.fillStyle="#fff";
+          ctx.fillText("Electricity flows only when the circuit is closed!", 100, 270);
+          this.animationFrameId = requestAnimationFrame(drawCircuit);
+        }
+        drawCircuit();
+    }
     
     conservationOfEnergyGame(container) {
         container.innerHTML = `
@@ -664,45 +752,6 @@ class PhysicsPageManager {
         `;
 
         // Force game implementation
-    }
-
-    electricityGame(container) {
-        container.className = 'game-container electricity-game';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>💡 Circuit Builder Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Circuits: <span id="circuitScore">0</span></div>
-                    <div class="components">Components: <span id="componentsLeft">5</span></div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Build working circuits to light the bulb!</p>
-            </div>
-
-            <div class="game-area">
-                <div class="component battery">🔋</div>
-                <div class="component bulb">💡</div>
-                <div class="wire-terminal" style="top: 180px; left: 100px;"></div>
-                <div class="wire-terminal" style="top: 180px; right: 100px;"></div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Voltage: <span id="voltageValue">9</span> V</label>
-                    <input type="range" id="voltageSlider" min="1" max="12" value="9">
-                </div>
-                <button id="connectButton" class="btn btn-primary">🔌 Connect</button>
-                <button id="testButton" class="btn btn-success">⚡ Test</button>
-            </div>
-
-            <div class="game-feedback">
-                <div id="circuitMessage">Drag components and connect terminals!</div>
-            </div>
-        `;
-
-        // Electricity game implementation
     }
 
     waveGame(container) {

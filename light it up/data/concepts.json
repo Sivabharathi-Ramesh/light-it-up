@@ -21,7 +21,7 @@
       "title": "Electric Circuits",
       "concept": "An electric circuit is a closed path that allows electric current to flow. Circuits contain sources (like batteries), conductors (wires), and loads (like bulbs or resistors).",
       "goal": "Build simple series and parallel circuits and observe how current and voltage behave.",
-      "animation": "wire_spark",
+      "animation": "bulb_glow",
       "quiz": {
         "question": "In a simple series circuit with two identical bulbs, if one bulb is removed, what happens to the other bulb?",
         "options": ["It gets brighter", "It goes out", "It stays the same"],

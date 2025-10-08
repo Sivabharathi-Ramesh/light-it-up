@@ -924,6 +924,21 @@ footer { text-align: center; padding: 20px; margin-top: 30px; font-size: 0.9rem;
     font-size: 1rem;
 }
 
+.energy-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--energy);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease-out;
+}
+
+.energy-text.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 /* Quiz Styles */
 .quiz-question { font-size: 1.2rem; margin-bottom: 20px; }
