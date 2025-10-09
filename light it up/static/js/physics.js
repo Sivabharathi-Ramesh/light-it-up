@@ -203,6 +203,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'motion':
+                this.motionGame(gameContainer);
+                break;
             case 'momentum':
                 this.momentumGame(gameContainer);
                 break;
@@ -259,6 +262,82 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    motionGame(container) {
+        container.innerHTML = `
+            <div style="text-align:center;color:white;">
+              <h2>🏎️ Speed Racer - Motion Game</h2>
+              <p>Adjust the car’s speed and see how distance changes over time!</p>
+              <label>⚙️ Speed (m/s):</label>
+              <input type="range" id="speedSlider" min="10" max="100" value="40" style="width:250px;">
+              <span id="speedVal">40</span>
+              <button id="startBtn" style="margin-left:10px;">▶️ Start</button>
+              <canvas id="motionGame" width="500" height="250" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+              <p id="stats" style="margin-top:5px;"></p>
+            </div>
+        `;
+    
+        const canvas = container.querySelector("#motionGame");
+        const ctx = canvas.getContext("2d");
+        let x = 50, startTime = null, running = false, speed = 40;
+    
+        const speedSlider = container.querySelector("#speedSlider");
+        const speedVal = container.querySelector("#speedVal");
+        const startBtn = container.querySelector("#startBtn");
+        const stats = container.querySelector("#stats");
+    
+        speedSlider.oninput = e => {
+            speed = parseInt(e.target.value);
+            speedVal.textContent = speed;
+        };
+    
+        startBtn.onclick = () => {
+            x = 50;
+            startTime = performance.now();
+            running = true;
+        };
+    
+        function drawCar() {
+            ctx.fillStyle = "#ffea00";
+            ctx.fillRect(x, 180, 40, 20);
+            ctx.beginPath();
+            ctx.arc(x + 10, 200, 6, 0, Math.PI * 2);
+            ctx.arc(x + 30, 200, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#333";
+            ctx.fill();
+        }
+    
+        const drawMotion = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+            
+            ctx.clearRect(0, 0, 500, 250);
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText("🏁 Finish Line", 420, 170);
+            ctx.strokeStyle = "#ff5252";
+            ctx.beginPath();
+            ctx.moveTo(450, 150);
+            ctx.lineTo(450, 210);
+            ctx.stroke();
+    
+            drawCar();
+    
+            if (running) {
+                let time = (performance.now() - startTime) / 1000; // seconds
+                x = 50 + speed * (time / 5); // scaled motion
+                stats.textContent = `⏱️ Time: ${time.toFixed(1)} s | 🛣️ Distance: ${(x - 50).toFixed(1)} m`;
+                if (x >= 450) {
+                    running = false;
+                    stats.textContent += " ✅ Reached Finish Line!";
+                }
+            }
+            this.animationFrameId = requestAnimationFrame(drawMotion);
+        }
+        drawMotion();
+    }
+
     opticsGame(container) {
         container.innerHTML = `
             <div style="text-align:center;color:white;">
@@ -902,175 +981,6 @@ class PhysicsPageManager {
         draw();
     }
     
-    momentumGame(container) {
-        container.className = 'game-container momentum-game';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>🎯 Momentum Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Score: <span id="momentumScore">0</span></div>
-                    <div class="level">Level: <span id="gameLevel">1</span></div>
-                    <div class="lives">Lives: <span id="gameLives">3</span> ❤️</div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Make the blue cart hit the target zone with the correct momentum!</p>
-                <div id="targetInfo">Target Momentum: <span id="targetMomentum">12</span> kg·m/s</div>
-            </div>
-
-            <div class="game-area">
-                <div class="track">
-                    <div class="start-zone">Start</div>
-                    <div id="cart" class="game-cart">A</div>
-                    <div id="targetZone" class="target-zone">Target</div>
-                    <div class="obstacles">
-                        <div class="obstacle" style="left: 40%"></div>
-                        <div class="obstacle" style="left: 70%"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Mass: <span id="massValue">2</span> kg</label>
-                    <input type="range" id="massSlider" min="1" max="10" value="2">
-                </div>
-                <div class="control-group">
-                    <label>Speed: <span id="speedValue">3</span> m/s</label>
-                    <input type="range" id="speedSlider" min="1" max="15" value="3">
-                </div>
-                <button id="launchBtn" class="btn btn-primary">🚀 Launch</button>
-                <button id="resetBtn" class="btn">🔄 Reset</button>
-            </div>
-
-            <div class="game-feedback">
-                <div id="momentumDisplay">Current Momentum: <span id="currentMomentum">6</span> kg·m/s</div>
-                <div id="gameMessage"></div>
-            </div>
-        `;
-
-        // Game state
-        let score = 0;
-        let level = 1;
-        let lives = 3;
-        let targetMomentum = 12;
-        
-        const massSlider = container.querySelector('#massSlider');
-        const speedSlider = container.querySelector('#speedSlider');
-        const massValue = container.querySelector('#massValue');
-        const speedValue = container.querySelector('#speedValue');
-        const launchBtn = container.querySelector('#launchBtn');
-        const resetBtn = container.querySelector('#resetBtn');
-        const cart = container.querySelector('#cart');
-        const momentumDisplay = container.querySelector('#currentMomentum');
-        const gameMessage = container.querySelector('#gameMessage');
-        const targetMomentumSpan = container.querySelector('#targetMomentum');
-        const scoreSpan = container.querySelector('#momentumScore');
-        const levelSpan = container.querySelector('#gameLevel');
-        const livesSpan = container.querySelector('#gameLives');
-
-        // Initialize game
-        updateTarget();
-        updateDisplays();
-        updateMomentum();
-
-        massSlider.addEventListener('input', () => {
-            massValue.textContent = massSlider.value;
-            updateMomentum();
-        });
-
-        speedSlider.addEventListener('input', () => {
-            speedValue.textContent = speedSlider.value;
-            updateMomentum();
-        });
-
-        launchBtn.addEventListener('click', launchCart);
-        resetBtn.addEventListener('click', resetGame);
-
-        function updateMomentum() {
-            const mass = parseInt(massSlider.value);
-            const speed = parseInt(speedSlider.value);
-            const momentum = mass * speed;
-            momentumDisplay.textContent = momentum;
-        }
-
-        function updateTarget() {
-            targetMomentum = 8 + (level * 4);
-            targetMomentumSpan.textContent = targetMomentum;
-        }
-
-        function updateDisplays() {
-            scoreSpan.textContent = score;
-            levelSpan.textContent = level;
-            livesSpan.textContent = lives;
-        }
-
-        function launchCart() {
-            const mass = parseInt(massSlider.value);
-            const speed = parseInt(speedSlider.value);
-            const momentum = mass * speed;
-            
-            // Animate cart movement
-            cart.style.transition = 'left 2s ease-in-out';
-            cart.style.left = '85%';
-            
-            // Check result after animation
-            setTimeout(() => {
-                const difference = Math.abs(momentum - targetMomentum);
-                const tolerance = 2;
-                
-                if (difference <= tolerance) {
-                    // Success!
-                    score += level * 10;
-                    level++;
-                    gameMessage.innerHTML = `🎉 Perfect! Momentum = ${momentum} kg·m/s<br>+${level * 10} points!`;
-                    gameMessage.style.color = '#2ECC71';
-                    
-                    if (window.audioManager) window.audioManager.play('success');
-                } else {
-                    // Try again
-                    lives--;
-                    gameMessage.innerHTML = `❌ Got ${momentum} kg·m/s, needed ${targetMomentum} kg·m/s`;
-                    gameMessage.style.color = '#E74C3C';
-                    
-                    if (lives <= 0) {
-                        gameMessage.innerHTML += '<br>💀 Game Over! Click Reset.';
-                        launchBtn.disabled = true;
-                    }
-                    
-                    if (window.audioManager) window.audioManager.play('pop');
-                }
-                
-                updateTarget();
-                updateDisplays();
-                
-                // Reset cart position
-                setTimeout(() => {
-                    cart.style.transition = 'left 0.5s';
-                    cart.style.left = '10%';
-                }, 2000);
-                
-            }, 2000);
-        }
-
-        function resetGame() {
-            score = 0;
-            level = 1;
-            lives = 3;
-            massSlider.value = 2;
-            speedSlider.value = 3;
-            massValue.textContent = '2';
-            speedValue.textContent = '3';
-            cart.style.left = '10%';
-            gameMessage.innerHTML = '';
-            launchBtn.disabled = false;
-            updateTarget();
-            updateDisplays();
-            updateMomentum();
-        }
-    }
-
     energyGame(container) {
         container.className = 'game-container energy-game';
         container.innerHTML = `
