@@ -5,6 +5,7 @@ class PhysicsPageManager {
         this.currentConceptIndex = 0;
         this.completedConcepts = new Set();
         this.animationFrameId = null;
+        this.formulas = {};
 
         this.elements = {
             navigation: document.getElementById('conceptNavigation'),
@@ -23,6 +24,7 @@ class PhysicsPageManager {
 
     async init() {
         await this.fetchConcepts();
+        await this.fetchFormulas();
         if (Object.keys(this.concepts).length > 0) {
             this.conceptKeys = Object.keys(this.concepts);
             this.buildNavigation();
@@ -55,6 +57,17 @@ class PhysicsPageManager {
         }
     }
 
+    async fetchFormulas() {
+        try {
+            const response = await fetch('/static/data/formulas.json');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            this.formulas = await response.json();
+        } catch (error) {
+            console.error("Failed to fetch formulas:", error);
+            this.formulas = {};
+        }
+    }
+
     buildNavigation() {
         this.elements.navigation.innerHTML = '';
         this.conceptKeys.forEach((key, index) => {
@@ -72,6 +85,7 @@ class PhysicsPageManager {
             if (key.includes('momentum')) iconClass = 'fa-arrows-alt-h';
             if (key.includes('electric')) iconClass = 'fa-bolt';
             if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
+            if (key.includes('thermodynamics')) iconClass = 'fa-thermometer-half';
             
             navItem.innerHTML = `<i class="fas ${iconClass}"></i><span>${concept.title}</span>`;
             
@@ -129,88 +143,32 @@ class PhysicsPageManager {
         const formulaContainer = this.elements.formula;
         formulaContainer.innerHTML = ''; // Clear previous formula
 
-        if (key === 'centrifugal_force') {
-            const breakdownHtml = `
-                <li style="animation-delay: 0.2s">
-                    <div class="formula-part">F<sub>c</sub> <span class="icon">🌪️</span></div>
-                    <div class="formula-desc">The outward force</div>
+        let formulaData = null;
+
+        if (this.formulas.motion) {
+            formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+        }
+        if (!formulaData && this.formulas.energy) {
+            formulaData = this.formulas.energy.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+        }
+        if (!formulaData && this.formulas.electricity) {
+            formulaData = this.formulas.electricity.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+        }
+        if (!formulaData && this.formulas.thermodynamics) {
+            formulaData = this.formulas.thermodynamics.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+        }
+
+        if (formulaData) {
+            let breakdownHtml = Object.entries(formulaData.variables).map(([part, description], index) => `
+                <li style="animation-delay: ${index * 0.2}s">
+                    <div class="formula-part">${part}</div>
+                    <div class="formula-desc">${description}</div>
                 </li>
-                <li style="animation-delay: 0.4s">
-                    <div class="formula-part">m <span class="icon">🏋️</span></div>
-                    <div class="formula-desc">Mass (how heavy it is)</div>
-                </li>
-                 <li style="animation-delay: 0.6s">
-                    <div class="formula-part">v <span class="icon">⏩</span></div>
-                    <div class="formula-desc">Velocity (how fast it spins)</div>
-                </li>
-                 <li style="animation-delay: 0.8s">
-                    <div class="formula-part">r <span class="icon">📏</span></div>
-                    <div class="formula-desc">Radius (length of the rope)</div>
-                </li>
-            `;
+            `).join('');
 
             formulaContainer.innerHTML = `
                 <h3>The Secret Formula! 🤫</h3>
-                <div class="formula-display">F<sub>c</sub> = (m × v²) / r</div>
-                <ul class="formula-breakdown">${breakdownHtml}</ul>
-            `;
-        } else if (key === 'conservation_of_energy') {
-            const breakdownHtml = `
-                <li style="animation-delay: 0.2s">
-                    <div class="formula-part">PE <span class="icon">🎈</span></div>
-                    <div class="formula-desc">Potential Energy (stored)</div>
-                </li>
-                <li style="animation-delay: 0.4s">
-                    <div class="formula-part">KE <span class="icon">🏃</span></div>
-                    <div class="formula-desc">Kinetic Energy (moving)</div>
-                </li>
-            `;
-
-            formulaContainer.innerHTML = `
-                <h3>The Secret Formula! 🤫</h3>
-                <div class="formula-display">PE + KE = Constant</div>
-                <ul class="formula-breakdown">${breakdownHtml}</ul>
-            `;
-        } else if (key === 'electric_circuits' || key === 'electricity') {
-            const breakdownHtml = `
-                <li style="animation-delay: 0.2s">
-                    <div class="formula-part">F <span class="icon">⚡</span></div>
-                    <div class="formula-desc">Force</div>
-                </li>
-                <li style="animation-delay: 0.4s">
-                    <div class="formula-part">q <span class="icon">➕</span></div>
-                    <div class="formula-desc">Charges</div>
-                </li>
-                 <li style="animation-delay: 0.6s">
-                    <div class="formula-part">r <span class="icon">📏</span></div>
-                    <div class="formula-desc">Distance</div>
-                </li>
-            `;
-
-            formulaContainer.innerHTML = `
-                <h3>The Secret Formula! 🤫</h3>
-                <div class="formula-display">F = k * (|q₁q₂| / r²)</div>
-                <ul class="formula-breakdown">${breakdownHtml}</ul>
-            `;
-        } else if (key === 'electromagnetism') {
-            const breakdownHtml = `
-                <li style="animation-delay: 0.2s">
-                    <div class="formula-part">c <span class="icon">⚡</span></div>
-                    <div class="formula-desc">Speed of Light (a constant!)</div>
-                </li>
-                <li style="animation-delay: 0.4s">
-                    <div class="formula-part">λ <span class="icon">🌊</span></div>
-                    <div class="formula-desc">Wavelength (distance between waves)</div>
-                </li>
-                 <li style="animation-delay: 0.6s">
-                    <div class="formula-part">ν <span class="icon">⏱️</span></div>
-                    <div class="formula-desc">Frequency (waves per second)</div>
-                </li>
-            `;
-
-            formulaContainer.innerHTML = `
-                <h3>The Secret Formula! 🤫</h3>
-                <div class="formula-display">c = λν</div>
+                <div class="formula-display">${formulaData.formula}</div>
                 <ul class="formula-breakdown">${breakdownHtml}</ul>
             `;
         } else {
@@ -272,6 +230,12 @@ class PhysicsPageManager {
             case 'electromagnetism':
                 this.electromagneticSpectrumGame(gameContainer);
                 break;
+            case 'doppler_effect':
+                this.dopplerEffectGame(gameContainer);
+                break;
+            case 'thermodynamics':
+                this.thermodynamicsGame(gameContainer);
+                break;
             default:
                 // Fallback to Lottie animation or simple simulation
                 this.tryLoadLottie(container, concept.animation).then(loaded => {
@@ -284,6 +248,146 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    thermodynamicsGame(container) {
+        container.innerHTML = `
+            <div class="game-area" style="text-align:center;color:white;">
+              <h2>🔥 Heat It Up! - Thermodynamics Game</h2>
+              <p>Move the slider to change the temperature — watch molecules move faster or slower!</p>
+              <label>🌡️ Temperature:</label>
+              <input type="range" id="tempSlider" min="1" max="10" value="5" style="width:200px;">
+              <span id="tempVal">5</span><br>
+              <canvas id="heatGame" width="500" height="300" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+            </div>
+        `;
+    
+        const canvas = container.querySelector("#heatGame");
+        const ctx = canvas.getContext("2d");
+        let temp = 5;
+    
+        const tempSlider = container.querySelector("#tempSlider");
+        const tempVal = container.querySelector("#tempVal");
+    
+        tempSlider.oninput = e => {
+            temp = e.target.value;
+            tempVal.textContent = temp;
+        };
+    
+        let particles = [];
+        for (let i = 0; i < 25; i++) {
+            particles.push({
+                x: Math.random() * 500,
+                y: Math.random() * 300,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2
+            });
+        }
+    
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+    
+            ctx.clearRect(0, 0, 500, 300);
+    
+            ctx.strokeStyle = "#00e5ff";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(5, 5, 490, 290);
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText("🔥 Higher temperature = faster molecules!", 110, 20);
+    
+            particles.forEach(p => {
+                p.x += p.vx * temp * 0.3;
+                p.y += p.vy * temp * 0.3;
+                if (p.x < 10 || p.x > 490) p.vx *= -1;
+                if (p.y < 10 || p.y > 290) p.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = `hsl(${200 + temp * 10},100%,60%)`;
+                ctx.fill();
+            });
+    
+            this.animationFrameId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+
+    dopplerEffectGame(container) {
+        container.innerHTML = `
+            <div class="game-area doppler-game">
+                <div id="ambulance">🚑</div>
+                <div id="listener">🧍</div>
+                <div class="sound-waves"></div>
+                <button id="startDoppler" class="btn btn-primary">Start</button>
+            </div>
+        `;
+    
+        const ambulance = container.querySelector('#ambulance');
+        const listener = container.querySelector('#listener');
+        const soundWaves = container.querySelector('.sound-waves');
+        const startBtn = container.querySelector('#startDoppler');
+    
+        let isMoving = false;
+        let position = -100;
+        let animationFrame;
+    
+        const resetAnimation = () => {
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            isMoving = false;
+            position = -100;
+            ambulance.style.left = `${position}px`;
+            soundWaves.innerHTML = '';
+            startBtn.disabled = false;
+        };
+    
+        const moveAmbulance = () => {
+            if (!isMoving) return;
+    
+            position += 2;
+            ambulance.style.left = `${position}px`;
+    
+            const ambulancePos = ambulance.getBoundingClientRect().left;
+            const listenerPos = listener.getBoundingClientRect().left;
+    
+            // Generate a new sound wave periodically
+            if (position % 20 === 0) {
+                const wave = document.createElement('div');
+                wave.className = 'sound-wave';
+                wave.style.left = `${position + 20}px`;
+                soundWaves.appendChild(wave);
+    
+                // Remove old waves
+                if (soundWaves.children.length > 20) {
+                    soundWaves.removeChild(soundWaves.firstChild);
+                }
+            }
+    
+            // Adjust pitch based on position relative to listener
+            if (position > -50 && position < 600) {
+                const pitch = 1.0 + (listenerPos - ambulancePos) / 300;
+                // This is a simplified audio effect. A real implementation would be more complex.
+                // For now, we'll just log it.
+                // In a full version, you could use Web Audio API to change oscillator frequency.
+            }
+    
+            if (position > container.offsetWidth) {
+                resetAnimation();
+                return;
+            }
+    
+            animationFrame = requestAnimationFrame(moveAmbulance);
+        };
+    
+        startBtn.addEventListener('click', () => {
+            if (!isMoving) {
+                isMoving = true;
+                startBtn.disabled = true;
+                moveAmbulance();
+            }
+        });
+    }
+
     electromagneticSpectrumGame(container) {
         container.innerHTML = `
             <div class="game-area">
