@@ -1,5 +1,16 @@
 {
   "physics": {
+    "longitudinal_wave": {
+        "title": "Longitudinal Waves",
+        "concept": "In a longitudinal wave, the particles of the medium move in a direction parallel to the direction that the wave moves. A great example of a longitudinal wave is sound.",
+        "goal": "Observe how particles compress and spread out to propagate a longitudinal wave.",
+        "animation": null,
+        "quiz": {
+            "question": "Which of the following is an example of a longitudinal wave?",
+            "options": ["Light", "Sound", "A wave on a string"],
+            "answer": "Sound"
+        }
+    },
     "newtons_laws_of_motion": {
         "title": "Newton's Laws of Motion",
         "concept": "Sir Isaac Newton's three laws of motion are fundamental principles of classical mechanics. They describe the relationship between a body and the forces acting upon it, and its motion in response to those forces.",
@@ -68,7 +79,6 @@
     },
     "harmonic_oscillator": { "title": "Harmonic Oscillator", "concept": "Content coming soon!", "goal": "Explore simple harmonic motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "force": { "title": "Force", "concept": "Content coming soon!", "goal": "Explore pushes and pulls.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "longitudinal_wave": { "title": "Longitudinal Wave", "concept": "Content coming soon!", "goal": "Explore how waves like sound travel.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "rotational_motion": { "title": "Rotational Motion", "concept": "Content coming soon!", "goal": "Explore spinning objects.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "thermal_physics": { "title": "Thermal Physics", "concept": "Content coming soon!", "goal": "Explore heat and temperature.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "wave": { "title": "Wave", "concept": "Content coming soon!", "goal": "Explore different types of waves.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},

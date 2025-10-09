@@ -206,6 +206,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'longitudinal_wave':
+                this.longitudinalWaveGame(gameContainer);
+                break;
             case 'newtons_laws_of_motion':
                 this.newtonsLawsGame(gameContainer);
                 break;
@@ -267,6 +270,64 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    longitudinalWaveGame(container) {
+        container.innerHTML = `
+            <div class="game-area" style="text-align:center;color:white;">
+                <h2>🔊 Sound Wave Simulator</h2>
+                <p>Click the button to create a sound wave and see how it travels.</p>
+                <canvas id="waveCanvas" width="500" height="200" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+                <button id="pulseBtn" class="btn btn-primary">Create Pulse</button>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#waveCanvas");
+        const ctx = canvas.getContext("2d");
+        const pulseBtn = container.querySelector("#pulseBtn");
+
+        let particles = [];
+        const numParticles = 50;
+        const spacing = 400 / numParticles;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: 50 + i * spacing,
+                y: 100,
+                baseX: 50 + i * spacing
+            });
+        }
+
+        let time = 0;
+        let pulseTime = -1000;
+
+        pulseBtn.onclick = () => {
+            pulseTime = time;
+        };
+
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+
+            ctx.clearRect(0, 0, 500, 200);
+
+            particles.forEach((p, i) => {
+                const wave = Math.sin(time * 0.1 + i * 0.5) * 10;
+                const pulse = Math.exp(-Math.pow(time - (pulseTime + i * 2), 2) / 100) * 20;
+                p.x = p.baseX + wave + pulse;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = `hsl(${180 + wave * 2}, 100%, 70%)`;
+                ctx.fill();
+            });
+
+            time++;
+            this.animationFrameId = requestAnimationFrame(draw);
+        };
+        draw();
+    }
+
     newtonsLawsGame(container) {
         container.innerHTML = `
             <div class="game-area" style="text-align:center;color:white;">
