@@ -1,14 +1,14 @@
 {
   "physics": {
-    "longitudinal_wave": {
-        "title": "Longitudinal Waves",
-        "concept": "In a longitudinal wave, the particles of the medium move in a direction parallel to the direction that the wave moves. A great example of a longitudinal wave is sound.",
-        "goal": "Observe how particles compress and spread out to propagate a longitudinal wave.",
+    "momentum": {
+        "title": "Momentum",
+        "concept": "Momentum is a measure of an object's motion. An object with more mass or more velocity has more momentum. It is calculated by multiplying an object's mass by its velocity.",
+        "goal": "Experiment with how mass and velocity affect the momentum of an object.",
         "animation": null,
         "quiz": {
-            "question": "Which of the following is an example of a longitudinal wave?",
-            "options": ["Light", "Sound", "A wave on a string"],
-            "answer": "Sound"
+            "question": "If two objects have the same velocity, but one has more mass, which has more momentum?",
+            "options": ["The one with more mass", "The one with less mass", "They have the same momentum"],
+            "answer": "The one with more mass"
         }
     },
     "newtons_laws_of_motion": {
@@ -79,11 +79,11 @@
     },
     "harmonic_oscillator": { "title": "Harmonic Oscillator", "concept": "Content coming soon!", "goal": "Explore simple harmonic motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "force": { "title": "Force", "concept": "Content coming soon!", "goal": "Explore pushes and pulls.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
+    "longitudinal_wave": { "title": "Longitudinal Waves", "concept": "In a longitudinal wave, the particles of the medium move in a direction parallel to the direction that the wave moves. A great example of a longitudinal wave is sound.", "goal": "Observe how particles compress and spread out to propagate a longitudinal wave.", "animation": null, "quiz": { "question": "Which of the following is an example of a longitudinal wave?", "options": ["Light", "Sound", "A wave on a string"], "answer": "Sound" } },
     "rotational_motion": { "title": "Rotational Motion", "concept": "Content coming soon!", "goal": "Explore spinning objects.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "thermal_physics": { "title": "Thermal Physics", "concept": "Content coming soon!", "goal": "Explore heat and temperature.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "wave": { "title": "Wave", "concept": "Content coming soon!", "goal": "Explore different types of waves.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "centrifugal_force": { "title": "Centrifugal Force", "concept": "Centrifugal force is the feeling of being pushed outwards when you're spinning or moving in a circle. Think about being on a merry-go-round; the force that feels like it's pulling you away from the center is centrifugal force. It's actually the result of inertia—your body's desire to keep going in a straight line, but the ride is turning you in a circle. The faster you spin, the stronger this feeling becomes!", "goal": "Spin the bucket and see the effect of centrifugal force.", "animation": "placeholder", "quiz": { "question": "What happens if you spin the bucket faster?", "options": ["The water spills", "The water stays in", "The bucket breaks"], "answer": "The water stays in"}},
-    "momentum": { "title": "Momentum", "concept": "Momentum measures how hard it is to stop a moving object. It's the product of mass and velocity (p = m * v).", "goal": "See how mass and speed affect collisions and learn conservation of momentum with simple colliding carts.", "animation": "momentum_collision", "quiz": { "question": "If a heavy truck and a light car move at the same speed, which has more momentum?", "options": ["The truck", "The car", "Both the same"], "answer": "The truck"}},
     "magnetism": { "title": "Magnetism", "concept": "Content coming soon!", "goal": "Explore magnetic forces.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "conservation_of_energy": { "title": "Conservation of Energy", "concept": "Energy can't be created or destroyed, it just changes from one form to another. Think of it like a superhero who can change costumes—it's still the same hero, just in a different outfit! This is one of the most important rules in all of science.", "goal": "Transform energy from one form to another and see how it flows.", "animation": "placeholder", "quiz": { "question": "When a light bulb is on, electrical energy is changed into...", "options": ["Light and heat energy", "Sound energy", "Solar energy"], "answer": "Light and heat energy"}},
     "electricity": { "title": "Static Electricity", "concept": "Static electricity is all about the tiny particles called electrons. When you rub two things together, sometimes electrons jump from one to the other. The one that gains electrons becomes negatively charged, and the one that loses them becomes positively charged. Just like magnets, opposite charges attract, and like charges repel!", "goal": "Choose the charge for the second particle and see if it attracts or repels the first one.", "animation": "placeholder", "quiz": { "question": "If two balloons both have a negative charge, they will...", "options": ["Attract each other", "Repel each other", "Do nothing"], "answer": "Repel each other"}},
