@@ -1,5 +1,16 @@
 {
   "physics": {
+    "gravity": {
+        "title": "Gravity",
+        "concept": "Gravity is the force by which a planet or other body draws objects toward its center. The force of gravity keeps all of the planets in orbit around the sun.",
+        "goal": "Observe how gravity affects objects with and without air resistance.",
+        "animation": null,
+        "quiz": {
+            "question": "On Earth, why does a feather fall slower than a bowling ball?",
+            "options": ["The feather is lighter", "Air resistance affects the feather more", "The bowling ball is more aerodynamic"],
+            "answer": "Air resistance affects the feather more"
+        }
+    },
     "momentum": {
         "title": "Momentum",
         "concept": "Momentum is a measure of an object's motion. An object with more mass or more velocity has more momentum. It is calculated by multiplying an object's mass by its velocity.",
@@ -101,8 +112,7 @@
     "electromagnetism": { "title": "Electromagnetic Spectrum Sort", "concept": "Electromagnetism is a fundamental force of nature that describes the interaction between electrically charged particles. This interaction is mediated by electromagnetic fields, which include both electric and magnetic fields.", "goal": "Sort the different types of electromagnetic radiation from lowest to highest energy.", "animation": "placeholder", "quiz": { "question": "Which of these has the longest wavelength?", "options": ["X-Rays", "Radio Waves", "Visible Light"], "answer": "Radio Waves"}},
     "fluids": { "title": "Fluids", "concept": "Content coming soon!", "goal": "Explore liquids and gases.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "modern_physics": { "title": "Modern Physics", "concept": "Content coming soon!", "goal": "Explore quantum mechanics and relativity.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "energy": { "title": "Energy", "concept": "Content coming soon!", "goal": "Explore the ability to do work.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "gravity": { "title": "Gravity", "concept": "Content coming soon!", "goal": "Explore the force of attraction.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}}
+    "energy": { "title": "Energy", "concept": "Content coming soon!", "goal": "Explore the ability to do work.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}}
   },
   "chemistry": {
     "atoms": { "title": "Atoms", "definition": "Atoms are the tiny, fundamental building blocks of everything!", "example": "A single drop of water contains billions of water molecules.", "animation": "atom", "quiz": { "question": "What are the main particles inside an atom?", "options": ["Protons, Neutrons, Electrons", "Pancakes, Noodles, Eggs"], "answer": "Protons, Neutrons, Electrons"}},

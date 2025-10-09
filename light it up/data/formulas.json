@@ -11,6 +11,16 @@
         }
     },
     {
+        "name": "Momentum",
+        "formula": "p = mv",
+        "description": "Momentum (p) is the product of an object's mass (m) and its velocity (v).",
+        "variables": {
+            "p": "Momentum (kg·m/s)",
+            "m": "Mass (kg)",
+            "v": "Velocity (m/s)"
+        }
+    },
+    {
       "name": "Speed",
       "formula": "v = d/t",
       "description": "Velocity equals distance divided by time",
@@ -33,6 +43,17 @@
     }
   ],
   "energy": [
+    {
+        "name": "Gravitational Force",
+        "formula": "F = G * (m₁m₂ / r²)",
+        "description": "The force of gravitational attraction between two objects.",
+        "variables": {
+            "F": "Gravitational Force",
+            "G": "Gravitational Constant",
+            "m₁, m₂": "Masses of the objects",
+            "r": "Distance between the centers of the masses"
+        }
+    },
     {
       "name": "Potential Energy",
       "formula": "PE = mgh",

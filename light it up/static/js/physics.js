@@ -80,7 +80,7 @@ class PhysicsPageManager {
             if (key.includes('wave')) iconClass = 'fa-water';
             if (key.includes('motion')) iconClass = 'fa-running';
             if (key.includes('energy')) iconClass = 'fa-bolt';
-            if (key.includes('gravity')) iconClass = 'fa-parachute-box';
+            if (key.includes('gravity')) iconClass = 'fa-globe-americas';
             if (key.includes('force')) iconClass = 'fa-gavel';
             if (key.includes('momentum')) iconClass = 'fa-bowling-ball';
             if (key.includes('electric')) iconClass = 'fa-bolt';
@@ -152,7 +152,10 @@ class PhysicsPageManager {
         } else if (this.formulas.motion) {
             formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
-        if (!formulaData && this.formulas.energy) {
+        if (!formulaData && this.formulas.energy && key === 'gravity') {
+            formulaData = this.formulas.energy.find(f => f.name.toLowerCase() === "gravitational force");
+        }
+        else if (!formulaData && this.formulas.energy) {
             formulaData = this.formulas.energy.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
         if (!formulaData && this.formulas.electricity) {
@@ -206,6 +209,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'gravity':
+                this.gravityGame(gameContainer);
+                break;
             case 'momentum':
                 this.momentumGame(gameContainer);
                 break;
@@ -220,9 +226,6 @@ class PhysicsPageManager {
                 break;
             case 'energy':
                 this.energyGame(gameContainer);
-                break;
-            case 'gravity':
-                this.gravityGame(gameContainer);
                 break;
             case 'wave':
             case 'waves':
@@ -270,6 +273,89 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    gravityGame(container) {
+        container.innerHTML = `
+            <div style="text-align:center;color:white;">
+              <h2>🍎 Gravity Drop Experiment</h2>
+              <p>Drop two objects and see how gravity affects them!</p>
+            
+              <button id="earthBtn" style="margin:5px;padding:8px 12px;background:#00e5ff;border:none;border-radius:8px;">🌍 Earth Mode</button>
+              <button id="spaceBtn" style="margin:5px;padding:8px 12px;background:#ffb300;border:none;border-radius:8px;">🌌 Space Mode</button>
+              <button id="dropBtn" style="margin:5px;padding:8px 16px;background:#00c853;border:none;border-radius:8px;">⬇️ Drop!</button>
+            
+              <canvas id="gravityCanvas" width="600" height="300" style="background:#00111a;border-radius:10px;margin-top:15px;"></canvas>
+              <p id="info" style="margin-top:10px;"></p>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#gravityCanvas");
+        const ctx = canvas.getContext("2d");
+        let objects = [
+            { x: 200, y: 50, v: 0, color: "#00e5ff", label: "Ball" },
+            { x: 350, y: 50, v: 0, color: "#ffb300", label: "Feather" }
+        ];
+        let g = 9.8, air = true, running = false;
+
+        const earthBtn = container.querySelector("#earthBtn");
+        const spaceBtn = container.querySelector("#spaceBtn");
+        const dropBtn = container.querySelector("#dropBtn");
+        const info = container.querySelector("#info");
+
+        earthBtn.onclick = () => {
+            air = true;
+            info.textContent = "🌍 Air resistance ON — heavier object falls faster!";
+        };
+        spaceBtn.onclick = () => {
+            air = false;
+            info.textContent = "🌌 No air resistance — both fall together!";
+        };
+        dropBtn.onclick = () => {
+            running = true;
+            objects.forEach(o => { o.y = 50; o.v = 0; });
+        };
+
+        function drawObject(o) {
+            ctx.beginPath();
+            ctx.arc(o.x, o.y, 20, 0, Math.PI * 2);
+            ctx.fillStyle = o.color;
+            ctx.fill();
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText(o.label, o.x - 20, o.y - 30);
+        }
+
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+
+            ctx.clearRect(0, 0, 600, 300);
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText("Ground", 260, 280);
+            ctx.beginPath();
+            ctx.moveTo(50, 270);
+            ctx.lineTo(550, 270);
+            ctx.strokeStyle = "#ccc";
+            ctx.stroke();
+
+            if (running) {
+                for (let o of objects) {
+                    const resistance = air ? (o.label === "Feather" ? 0.4 : 0.05) : 0;
+                    o.v += (g * (1 - resistance)) * 0.05;
+                    o.y += o.v;
+                    if (o.y > 250) o.y = 250;
+                }
+                if (objects.every(o => o.y >= 250)) running = false;
+            }
+
+            objects.forEach(drawObject);
+            this.animationFrameId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
     momentumGame(container) {
         container.innerHTML = `
             <div class="game-area" style="text-align:center;color:white;">
@@ -1224,106 +1310,6 @@ class PhysicsPageManager {
         draw();
     }
     
-    energyGame(container) {
-        container.className = 'game-container energy-game';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>⚡ Energy Conversion Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Energy: <span id="energyScore">0</span> J</div>
-                    <div class="time">Time: <span id="gameTimer">60</span>s</div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Convert potential energy to kinetic energy and collect energy orbs!</p>
-            </div>
-
-            <div class="energy-bars">
-                <div class="energy-bar">
-                    <div>Potential Energy</div>
-                    <div class="potential-bar" style="width: 100%"></div>
-                </div>
-                <div class="energy-bar">
-                    <div>Kinetic Energy</div>
-                    <div class="kinetic-bar" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <div class="game-area">
-                <div class="hill-track">
-                    <div class="energy-orbs">
-                        <div class="energy-orb" style="left: 30%" data-energy="50">⚡</div>
-                        <div class="energy-orb" style="left: 60%" data-energy="100">⚡</div>
-                        <div class="energy-orb" style="left: 80%" data-energy="150">⚡</div>
-                    </div>
-                    <div id="energyCart" class="energy-cart">🚗</div>
-                </div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Mass: <span id="cartMass">5</span> kg</label>
-                    <input type="range" id="massControl" min="1" max="20" value="5">
-                </div>
-                <div class="control-group">
-                    <label>Height: <span id="hillHeight">20</span> m</label>
-                    <input type="range" id="heightControl" min="5" max="50" value="20">
-                </div>
-                <button id="releaseCart" class="btn btn-primary">🎢 Release</button>
-            </div>
-
-            <div class="game-feedback">
-                <div>Potential: <span id="potentialEnergy">980</span> J | Kinetic: <span id="kineticEnergy">0</span> J</div>
-                <div id="energyMessage"></div>
-            </div>
-        `;
-
-        // Energy game implementation would go here
-        // Similar structure to momentum game
-    }
-
-    gravityGame(container) {
-        container.className = 'game-container gravity-game';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>🪂 Gravity Drop Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Score: <span id="gravityScore">0</span></div>
-                    <div class="attempts">Attempts: <span id="attemptsLeft">5</span></div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Predict exactly when objects will hit the ground!</p>
-            </div>
-
-            <div class="game-area">
-                <div class="slingshot">🏹</div>
-                <div id="projectile" class="projectile">🎯</div>
-                <div class="target">🎯</div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Angle: <span id="angleValue">45</span>°</label>
-                    <input type="range" id="angleSlider" min="15" max="75" value="45">
-                </div>
-                <div class="control-group">
-                    <label>Power: <span id="powerValue">50</span>%</label>
-                    <input type="range" id="powerSlider" min="10" max="100" value="50">
-                </div>
-                <button id="launchProjectile" class="btn btn-primary">🚀 Launch</button>
-            </div>
-
-            <div class="game-feedback">
-                <div id="gravityMessage">Adjust angle and power to hit the target!</div>
-            </div>
-        `;
-
-        // Gravity game implementation
-    }
-
     forceGame(container) {
         container.className = 'game-container force-game';
         container.innerHTML = `
