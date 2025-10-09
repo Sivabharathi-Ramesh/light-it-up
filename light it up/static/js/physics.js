@@ -87,6 +87,7 @@ class PhysicsPageManager {
             if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
             if (key.includes('thermodynamics')) iconClass = 'fa-thermometer-half';
             if (key.includes('optics')) iconClass = 'fa-eye';
+            if (key.includes('newtons_laws_of_motion')) iconClass = 'fa-apple-alt';
             
             navItem.innerHTML = `<i class="fas ${iconClass}"></i><span>${concept.title}</span>`;
             
@@ -146,7 +147,9 @@ class PhysicsPageManager {
 
         let formulaData = null;
 
-        if (this.formulas.motion) {
+        if (this.formulas.motion && key === 'newtons_laws_of_motion') {
+            formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === "newton's second law");
+        } else if (this.formulas.motion) {
             formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
         if (!formulaData && this.formulas.energy) {
@@ -203,6 +206,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'newtons_laws_of_motion':
+                this.newtonsLawsGame(gameContainer);
+                break;
             case 'motion':
                 this.motionGame(gameContainer);
                 break;
@@ -225,7 +231,6 @@ class PhysicsPageManager {
             case 'electric_circuits':
                 this.electricityGame(gameContainer, concept);
                 break;
-            case 'newtons_laws_of_motion':
             case 'force':
                 this.forceGame(gameContainer);
                 break;
@@ -262,6 +267,85 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    newtonsLawsGame(container) {
+        container.innerHTML = `
+            <div class="game-area" style="text-align:center;color:white;">
+                <h2>🚀 Rocket Science - Newton's Third Law</h2>
+                <p>Click the button to apply force and see the equal and opposite reaction!</p>
+                <canvas id="newtonGame" width="500" height="300" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+                <button id="applyForceBtn" class="btn btn-primary">Apply Force 🔥</button>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#newtonGame");
+        const ctx = canvas.getContext("2d");
+        let rocket = { x: 250, y: 250, vy: 0, thrust: 0 };
+        let particles = [];
+
+        const applyForceBtn = container.querySelector("#applyForceBtn");
+        applyForceBtn.onclick = () => {
+            rocket.thrust = -0.2;
+            // Create exhaust particles
+            for (let i = 0; i < 20; i++) {
+                particles.push({
+                    x: rocket.x,
+                    y: rocket.y + 20,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: Math.random() * 5 + 5,
+                    alpha: 1
+                });
+            }
+        };
+
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+
+            ctx.clearRect(0, 0, 500, 300);
+
+            // Apply thrust and gravity
+            rocket.vy += rocket.thrust;
+            rocket.vy += 0.05; // Gravity
+            rocket.y += rocket.vy;
+
+            // Reset thrust
+            rocket.thrust = 0;
+
+            // Bounce off top and bottom
+            if (rocket.y < 20) {
+                rocket.y = 20;
+                rocket.vy *= -0.5;
+            }
+            if (rocket.y > 250) {
+                rocket.y = 250;
+                rocket.vy = 0;
+            }
+
+            // Draw rocket
+            ctx.font = "40px sans-serif";
+            ctx.fillText("🚀", rocket.x - 20, rocket.y);
+
+            // Draw and update particles
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.05;
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+                ctx.fillStyle = `rgba(255, 165, 0, ${p.alpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            this.animationFrameId = requestAnimationFrame(draw);
+        };
+        draw();
+    }
+    
     motionGame(container) {
         container.innerHTML = `
             <div style="text-align:center;color:white;">

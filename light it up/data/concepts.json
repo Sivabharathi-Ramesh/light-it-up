@@ -1,18 +1,80 @@
 {
   "physics": {
+    "newtons_laws_of_motion": {
+        "title": "Newton's Laws of Motion",
+        "concept": "Sir Isaac Newton's three laws of motion are fundamental principles of classical mechanics. They describe the relationship between a body and the forces acting upon it, and its motion in response to those forces.",
+        "goal": "Experiment with Newton's laws by applying force to objects with different masses.",
+        "animation": null,
+        "quiz": {
+            "question": "Which of Newton's laws is also known as the law of inertia?",
+            "options": ["First Law", "Second Law", "Third Law"],
+            "answer": "First Law"
+        }
+    },
+    "motion": {
+        "title": "Motion",
+        "concept": "Motion is the change in position of an object over time. We can describe motion using concepts like speed, velocity, and acceleration.",
+        "goal": "Race a car to the finish line and see how speed affects the time it takes to cover a distance.",
+        "animation": null,
+        "quiz": {
+            "question": "If two cars travel the same distance, which one will arrive first?",
+            "options": ["The slower car", "The faster car", "They will arrive at the same time"],
+            "answer": "The faster car"
+        }
+    },
+    "optics": {
+        "title": "Optics",
+        "concept": "Optics is the branch of physics that studies the behaviour and properties of light, including its interactions with matter and the construction of instruments that use or detect it.",
+        "goal": "Use a prism to split white light into a rainbow and understand the concept of dispersion.",
+        "animation": null,
+        "quiz": {
+            "question": "What is the phenomenon called when white light splits into its constituent colors?",
+            "options": ["Reflection", "Refraction", "Dispersion"],
+            "answer": "Dispersion"
+        }
+    },
+    "thermodynamics": {
+        "title": "Thermodynamics",
+        "concept": "Thermodynamics is the branch of physics that deals with heat, work, and temperature, and their relation to energy, radiation, and physical properties of matter.",
+        "goal": "Observe the relationship between temperature and particle motion.",
+        "animation": null,
+        "quiz": {
+            "question": "What happens to the particles in a gas when you increase the temperature?",
+            "options": ["They slow down", "They move faster", "They stop moving"],
+            "answer": "They move faster"
+        }
+    },
+    "unit_of_measurement": {
+        "title": "Unit of Measurement",
+        "concept": "In physics, we use standard units to measure different quantities. This helps scientists all over the world to understand each other's work.",
+        "goal": "Match the physical quantity to its correct SI unit.",
+        "animation": null,
+        "quiz": {
+            "question": "What is the SI unit of mass?",
+            "options": ["Gram", "Kilogram", "Pound"],
+            "answer": "Kilogram"
+        }
+    },
+    "doppler_effect": {
+        "title": "Doppler Effect",
+        "concept": "The Doppler effect is the change in frequency of a wave in relation to an observer who is moving relative to the wave source. A common example is the change in pitch heard when a vehicle sounding a siren approaches and recedes from an observer.",
+        "goal": "Observe how the sound waves from a moving ambulance change pitch.",
+        "animation": null,
+        "quiz": {
+            "question": "When a police car with its siren on moves towards you, the pitch of the siren sounds...",
+            "options": ["Higher", "Lower", "The same"],
+            "answer": "Higher"
+        }
+    },
     "harmonic_oscillator": { "title": "Harmonic Oscillator", "concept": "Content coming soon!", "goal": "Explore simple harmonic motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "optics": { "title": "Optics", "concept": "Content coming soon!", "goal": "Explore the behavior of light.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "force": { "title": "Force", "concept": "Content coming soon!", "goal": "Explore pushes and pulls.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "longitudinal_wave": { "title": "Longitudinal Wave", "concept": "Content coming soon!", "goal": "Explore how waves like sound travel.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "rotational_motion": { "title": "Rotational Motion", "concept": "Content coming soon!", "goal": "Explore spinning objects.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "thermal_physics": { "title": "Thermal Physics", "concept": "Content coming soon!", "goal": "Explore heat and temperature.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "unit_of_measurement": { "title": "Unit of Measurement", "concept": "Content coming soon!", "goal": "Explore standard units.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "wave": { "title": "Wave", "concept": "Content coming soon!", "goal": "Explore different types of waves.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "centrifugal_force": { "title": "Centrifugal Force", "concept": "Centrifugal force is the feeling of being pushed outwards when you're spinning or moving in a circle. Think about being on a merry-go-round; the force that feels like it's pulling you away from the center is centrifugal force. It's actually the result of inertia—your body's desire to keep going in a straight line, but the ride is turning you in a circle. The faster you spin, the stronger this feeling becomes!", "goal": "Spin the bucket and see the effect of centrifugal force.", "animation": "placeholder", "quiz": { "question": "What happens if you spin the bucket faster?", "options": ["The water spills", "The water stays in", "The bucket breaks"], "answer": "The water stays in"}},
     "momentum": { "title": "Momentum", "concept": "Momentum measures how hard it is to stop a moving object. It's the product of mass and velocity (p = m * v).", "goal": "See how mass and speed affect collisions and learn conservation of momentum with simple colliding carts.", "animation": "momentum_collision", "quiz": { "question": "If a heavy truck and a light car move at the same speed, which has more momentum?", "options": ["The truck", "The car", "Both the same"], "answer": "The truck"}},
-    "motion": { "title": "Motion", "concept": "Content coming soon!", "goal": "Explore how things move.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "magnetism": { "title": "Magnetism", "concept": "Content coming soon!", "goal": "Explore magnetic forces.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "thermodynamics": { "title": "Thermodynamics", "concept": "Content coming soon!", "goal": "Explore energy, heat, and work.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "conservation_of_energy": { "title": "Conservation of Energy", "concept": "Energy can't be created or destroyed, it just changes from one form to another. Think of it like a superhero who can change costumes—it's still the same hero, just in a different outfit! This is one of the most important rules in all of science.", "goal": "Transform energy from one form to another and see how it flows.", "animation": "placeholder", "quiz": { "question": "When a light bulb is on, electrical energy is changed into...", "options": ["Light and heat energy", "Sound energy", "Solar energy"], "answer": "Light and heat energy"}},
     "electricity": { "title": "Static Electricity", "concept": "Static electricity is all about the tiny particles called electrons. When you rub two things together, sometimes electrons jump from one to the other. The one that gains electrons becomes negatively charged, and the one that loses them becomes positively charged. Just like magnets, opposite charges attract, and like charges repel!", "goal": "Choose the charge for the second particle and see if it attracts or repels the first one.", "animation": "placeholder", "quiz": { "question": "If two balloons both have a negative charge, they will...", "options": ["Attract each other", "Repel each other", "Do nothing"], "answer": "Repel each other"}},
     "electric_circuits": {
@@ -29,7 +91,6 @@
     "electromagnetism": { "title": "Electromagnetic Spectrum Sort", "concept": "Electromagnetism is a fundamental force of nature that describes the interaction between electrically charged particles. This interaction is mediated by electromagnetic fields, which include both electric and magnetic fields.", "goal": "Sort the different types of electromagnetic radiation from lowest to highest energy.", "animation": "placeholder", "quiz": { "question": "Which of these has the longest wavelength?", "options": ["X-Rays", "Radio Waves", "Visible Light"], "answer": "Radio Waves"}},
     "fluids": { "title": "Fluids", "concept": "Content coming soon!", "goal": "Explore liquids and gases.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "modern_physics": { "title": "Modern Physics", "concept": "Content coming soon!", "goal": "Explore quantum mechanics and relativity.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "newtons_laws_of_motion": { "title": "Newton's Laws of Motion", "concept": "Content coming soon!", "goal": "Explore the fundamental laws of motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "energy": { "title": "Energy", "concept": "Content coming soon!", "goal": "Explore the ability to do work.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "gravity": { "title": "Gravity", "concept": "Content coming soon!", "goal": "Explore the force of attraction.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}}
   },

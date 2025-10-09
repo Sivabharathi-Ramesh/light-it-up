@@ -1,6 +1,16 @@
 {
   "motion": [
     {
+        "name": "Newton's Second Law",
+        "formula": "F = ma",
+        "description": "Force equals mass times acceleration.",
+        "variables": {
+            "F": "Force (Newtons)",
+            "m": "Mass (kg)",
+            "a": "Acceleration (m/s²)"
+        }
+    },
+    {
       "name": "Speed",
       "formula": "v = d/t",
       "description": "Velocity equals distance divided by time",
@@ -55,6 +65,33 @@
         "I": "current (Amperes)",
         "R": "resistance (Ohms)"
       }
+    }
+  ],
+  "thermodynamics": [
+    {
+        "name": "Ideal Gas Law",
+        "formula": "PV = nRT",
+        "description": "The Ideal Gas Law relates the pressure, volume, and temperature of a gas.",
+        "variables": {
+            "P": "Pressure",
+            "V": "Volume",
+            "n": "Number of moles",
+            "R": "Ideal gas constant",
+            "T": "Temperature"
+        }
+    }
+  ],
+  "optics": [
+    {
+        "name": "Snell's Law",
+        "formula": "n₁sin(θ₁) = n₂sin(θ₂)",
+        "description": "Snell's Law describes the relationship between the angles of incidence and refraction when light passes through the boundary between two different isotropic media.",
+        "variables": {
+            "n₁": "Refractive index of the first medium",
+            "θ₁": "Angle of incidence",
+            "n₂": "Refractive index of the second medium",
+            "θ₂": "Angle of refraction"
+        }
     }
   ]
 }
