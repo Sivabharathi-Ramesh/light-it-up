@@ -1,6 +1,16 @@
 {
   "motion": [
     {
+        "name": "Force",
+        "formula": "F = ma",
+        "description": "Force equals mass times acceleration.",
+        "variables": {
+            "F": "Force (Newtons)",
+            "m": "Mass (kg)",
+            "a": "Acceleration (m/s²)"
+        }
+    },
+    {
         "name": "Newton's Second Law",
         "formula": "F = ma",
         "description": "Force equals mass times acceleration.",

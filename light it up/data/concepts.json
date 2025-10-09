@@ -1,5 +1,16 @@
 {
   "physics": {
+    "force": {
+        "title": "Force",
+        "concept": "In physics, a force is an influence that can change the motion of an object. A force can cause an object with mass to change its velocity (e.g., moving from a state of rest), i.e., to accelerate.",
+        "goal": "Apply different forces to a box on various surfaces to see how friction affects its motion.",
+        "animation": null,
+        "quiz": {
+            "question": "If you push a box with the same force on ice and on sand, where will it travel further?",
+            "options": ["On ice", "On sand", "The same distance on both"],
+            "answer": "On ice"
+        }
+    },
     "gravity": {
         "title": "Gravity",
         "concept": "Gravity is the force by which a planet or other body draws objects toward its center. The force of gravity keeps all of the planets in orbit around the sun.",
@@ -89,7 +100,6 @@
         }
     },
     "harmonic_oscillator": { "title": "Harmonic Oscillator", "concept": "Content coming soon!", "goal": "Explore simple harmonic motion.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
-    "force": { "title": "Force", "concept": "Content coming soon!", "goal": "Explore pushes and pulls.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "longitudinal_wave": { "title": "Longitudinal Waves", "concept": "In a longitudinal wave, the particles of the medium move in a direction parallel to the direction that the wave moves. A great example of a longitudinal wave is sound.", "goal": "Observe how particles compress and spread out to propagate a longitudinal wave.", "animation": null, "quiz": { "question": "Which of the following is an example of a longitudinal wave?", "options": ["Light", "Sound", "A wave on a string"], "answer": "Sound" } },
     "rotational_motion": { "title": "Rotational Motion", "concept": "Content coming soon!", "goal": "Explore spinning objects.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},
     "thermal_physics": { "title": "Thermal Physics", "concept": "Content coming soon!", "goal": "Explore heat and temperature.", "animation": "placeholder", "quiz": { "question": "Coming soon...", "options": ["A", "B", "C"], "answer": "A"}},

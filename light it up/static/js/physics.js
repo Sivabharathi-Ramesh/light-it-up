@@ -81,7 +81,7 @@ class PhysicsPageManager {
             if (key.includes('motion')) iconClass = 'fa-running';
             if (key.includes('energy')) iconClass = 'fa-bolt';
             if (key.includes('gravity')) iconClass = 'fa-globe-americas';
-            if (key.includes('force')) iconClass = 'fa-gavel';
+            if (key.includes('force')) iconClass = 'fa-hand-rock';
             if (key.includes('momentum')) iconClass = 'fa-bowling-ball';
             if (key.includes('electric')) iconClass = 'fa-bolt';
             if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
@@ -147,7 +147,7 @@ class PhysicsPageManager {
 
         let formulaData = null;
 
-        if (this.formulas.motion && (key === 'momentum' || key === 'newtons_laws_of_motion')) {
+        if (this.formulas.motion && (key === 'force' || key === 'momentum' || key === 'newtons_laws_of_motion')) {
             formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         } else if (this.formulas.motion) {
             formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
@@ -209,6 +209,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'force':
+                this.forceGame(gameContainer);
+                break;
             case 'gravity':
                 this.gravityGame(gameContainer);
                 break;
@@ -236,9 +239,6 @@ class PhysicsPageManager {
                  break;
             case 'electric_circuits':
                 this.electricityGame(gameContainer, concept);
-                break;
-            case 'force':
-                this.forceGame(gameContainer);
                 break;
             case 'centrifugal_force':
                 this.centrifugalForceGame(gameContainer);
@@ -273,6 +273,90 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    forceGame(container) {
+        container.innerHTML = `
+            <div style="text-align:center;color:white;">
+              <h2>📦 Push the Box Challenge</h2>
+              <p>Apply force and see how friction affects motion!</p>
+            
+              <label>💪 Force (N): </label>
+              <input type="range" id="force" min="10" max="100" value="50" style="width:200px;">
+              <span id="forceVal">50</span><br>
+            
+              <label>🛤️ Surface: </label>
+              <select id="surface" style="margin-top:8px;padding:4px 10px;border-radius:6px;">
+                <option value="ice">🧊 Ice (Low Friction)</option>
+                <option value="grass">🌿 Grass (Medium Friction)</option>
+                <option value="sand">🏖️ Sand (High Friction)</option>
+              </select><br>
+            
+              <button id="pushBtn" style="margin-top:10px;padding:8px 16px;background:#00e5ff;border:none;border-radius:8px;">💨 Push!</button>
+            
+              <canvas id="forceCanvas" width="600" height="250" style="background:#00111a;border-radius:10px;margin-top:15px;"></canvas>
+              <p id="result" style="margin-top:10px;"></p>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#forceCanvas");
+        const ctx = canvas.getContext("2d");
+        let boxX = 100, velocity = 0, friction = 0.02, pushing = false;
+
+        const forceSlider = container.querySelector("#force");
+        const surfaceSelect = container.querySelector("#surface");
+        const forceVal = container.querySelector("#forceVal");
+        const pushBtn = container.querySelector("#pushBtn");
+        const result = container.querySelector("#result");
+
+        forceSlider.oninput = e => forceVal.textContent = e.target.value;
+
+        pushBtn.onclick = () => {
+            const force = parseInt(forceSlider.value);
+            const surface = surfaceSelect.value;
+
+            if (surface === "ice") friction = 0.005;
+            else if (surface === "grass") friction = 0.02;
+            else friction = 0.04;
+
+            velocity = force / 10;
+            pushing = true;
+            result.textContent = `Applied Force: ${force} N | Surface: ${surface}`;
+        };
+
+        function drawBox() {
+            ctx.fillStyle = "#00e5ff";
+            ctx.fillRect(boxX, 150, 50, 50);
+            ctx.strokeStyle = "#fff";
+            ctx.strokeRect(boxX, 150, 50, 50);
+            ctx.fillStyle = "#ccc";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText("⬅️ Push!", 90, 140);
+        }
+
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+
+            ctx.clearRect(0, 0, 600, 250);
+            drawBox();
+            ctx.fillStyle = "#fff";
+            ctx.font = "16px 'Comic Sans MS'";
+            ctx.fillText("Ground ➡️", 500, 220);
+
+            if (pushing) {
+                boxX += velocity;
+                velocity -= friction;
+                if (velocity < 0) velocity = 0;
+                if (velocity === 0) pushing = false;
+            }
+            if (boxX > 550) boxX = 550;
+
+            this.animationFrameId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
     gravityGame(container) {
         container.innerHTML = `
             <div style="text-align:center;color:white;">
@@ -1310,90 +1394,6 @@ class PhysicsPageManager {
         draw();
     }
     
-    forceGame(container) {
-        container.className = 'game-container force-game';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>📦 Force & Motion Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Score: <span id="forceScore">0</span></div>
-                    <div class="pushes">Pushes: <span id="pushesLeft">10</span></div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Push the box to the target zone overcoming friction!</p>
-            </div>
-
-            <div class="game-area">
-                <div id="boxObject" class="box-object">📦</div>
-                <div class="target-zone" style="right: 50px; bottom: 50px; width: 100px; height: 100px;">🎯</div>
-                <div class="ground"></div>
-                <div id="forceArrow" class="force-arrow" style="display: none;">→</div>
-                <div id="frictionArrow" class="friction-arrow" style="display: none;">←</div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Force: <span id="forceValue">50</span> N</label>
-                    <input type="range" id="forceSlider" min="10" max="100" value="50">
-                </div>
-                <div class="control-group">
-                    <label>Friction: <span id="frictionValue">20</span> N</label>
-                    <input type="range" id="frictionSlider" min="0" max="50" value="20">
-                </div>
-                <button id="pushButton" class="btn btn-primary">👊 Push</button>
-            </div>
-
-            <div class="game-feedback">
-                <div id="forceMessage">Net Force = Applied Force - Friction</div>
-            </div>
-        `;
-
-        // Force game implementation
-    }
-
-    waveGame(container) {
-        container.className = 'game-container';
-        container.style.background = 'linear-gradient(to bottom, #001D3D, #003566)';
-        container.innerHTML = `
-            <div class="game-header">
-                <h3>🌊 Wave Properties Challenge</h3>
-                <div class="game-stats">
-                    <div class="score">Score: <span id="waveScore">0</span></div>
-                    <div class="patterns">Patterns: <span id="patternsMatched">0</span></div>
-                </div>
-            </div>
-            
-            <div class="game-objective">
-                <p><strong>Goal:</strong> Match the target wave pattern by adjusting frequency and amplitude!</p>
-            </div>
-
-            <div class="game-area">
-                <canvas id="waveCanvas" width="600" height="300" style="background: rgba(255,255,255,0.1); border-radius: 10px;"></canvas>
-                <div class="target-pattern">Target Pattern Shown Above</div>
-            </div>
-
-            <div class="game-controls-panel">
-                <div class="control-group">
-                    <label>Amplitude: <span id="ampValue">30</span></label>
-                    <input type="range" id="ampSlider" min="5" max="80" value="30">
-                </div>
-                <div class="control-group">
-                    <label>Frequency: <span id="freqValue">1</span></label>
-                    <input type="range" id="freqSlider" min="0.5" max="3" step="0.1" value="1">
-                </div>
-                <button id="matchButton" class="btn btn-primary">🎯 Match Pattern</button>
-            </div>
-
-            <div class="game-feedback">
-                <div id="waveMessage">Adjust sliders to match the target wave!</div>
-            </div>
-        `;
-
-        // Wave game implementation
-    }
-
     // Existing helper methods remain the same...
     async tryLoadLottie(container, animName) {
         if (!animName) return false;

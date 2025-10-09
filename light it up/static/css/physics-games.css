@@ -399,3 +399,37 @@
     font-size: 14px;
     max-width: 200px;
 }
+/* === Thermodynamics Game Styles === */
+
+.thermodynamics-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: linear-gradient(to bottom, #89f7fe 0%, #66a6ff 100%);
+}
+
+.thermodynamics-game canvas {
+    background: #e6f2ff;
+    border-radius: 10px;
+    border: 2px solid #3498db;
+}
+
+.thermodynamics-game .game-controls {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.thermodynamics-game .game-feedback {
+    font-weight: bold;
+    color: #0056b3;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 8px 15px;
+    border-radius: 10px;
+}
