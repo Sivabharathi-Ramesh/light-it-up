@@ -86,6 +86,7 @@ class PhysicsPageManager {
             if (key.includes('electric')) iconClass = 'fa-bolt';
             if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
             if (key.includes('thermodynamics')) iconClass = 'fa-thermometer-half';
+            if (key.includes('optics')) iconClass = 'fa-eye';
             
             navItem.innerHTML = `<i class="fas ${iconClass}"></i><span>${concept.title}</span>`;
             
@@ -155,8 +156,12 @@ class PhysicsPageManager {
             formulaData = this.formulas.electricity.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
         if (!formulaData && this.formulas.thermodynamics) {
-            formulaData = this.formulas.thermodynamics.find(f => f.name.toLowerCase() === "ideal gas law");
+            formulaData = this.formulas.thermodynamics.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
+        if (!formulaData && this.formulas.optics) {
+            formulaData = this.formulas.optics.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+        }
+
 
         if (formulaData) {
             let breakdownHtml = Object.entries(formulaData.variables).map(([part, description], index) => `
@@ -236,6 +241,9 @@ class PhysicsPageManager {
             case 'thermodynamics':
                 this.thermodynamicsGame(gameContainer);
                 break;
+            case 'optics':
+                this.opticsGame(gameContainer);
+                break;
             case 'unit_of_measurement':
                 this.unitMatchingGame(gameContainer);
                 break;
@@ -251,6 +259,80 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    opticsGame(container) {
+        container.innerHTML = `
+            <div style="text-align:center;color:white;">
+              <h2>🌈 Color Splitter - Prism Game</h2>
+              <p>Use the slider to rotate the prism and create a rainbow!</p>
+              <label>🔄 Prism Angle:</label>
+              <input type="range" id="prismAngle" min="20" max="70" value="40" style="width:250px;">
+              <span id="angleVal">40°</span>
+              <canvas id="prismGame" width="500" height="300" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+            </div>
+        `;
+    
+        const prismCanvas = container.querySelector("#prismGame");
+        const ctx = prismCanvas.getContext("2d");
+        const angleSlider = container.querySelector("#prismAngle");
+        const angleVal = container.querySelector("#angleVal");
+    
+        function drawPrism(angle) {
+            ctx.clearRect(0, 0, 500, 300);
+    
+            // White light beam (before prism)
+            ctx.strokeStyle = "#fff";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(50, 150);
+            ctx.lineTo(200, 150);
+            ctx.stroke();
+    
+            // Prism (triangle)
+            ctx.save();
+            ctx.translate(250, 150);
+            ctx.rotate((angle - 40) * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(-40, 40);
+            ctx.lineTo(40, 40);
+            ctx.lineTo(0, -40);
+            ctx.closePath();
+            ctx.fillStyle = "rgba(173,216,230,0.4)";
+            ctx.strokeStyle = "#00e5ff";
+            ctx.lineWidth = 2;
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+    
+            // Dispersed rainbow beams
+            const spread = (angle - 40) * 1.5;
+            const colors = ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#4b0082", "#8f00ff"];
+            colors.forEach((col, i) => {
+                ctx.strokeStyle = col;
+                ctx.beginPath();
+                ctx.moveTo(250, 150);
+                ctx.lineTo(450, 150 - (i - 3) * spread);
+                ctx.stroke();
+            });
+    
+            // Feedback
+            angleVal.textContent = `${angle}°`;
+            ctx.fillStyle = "#fff";
+            ctx.font = "14px sans-serif";
+            if (angle >= 38 && angle <= 44) {
+                ctx.fillStyle = "#00e676";
+                ctx.fillText("🌈 Perfect Rainbow Formed!", 160, 270);
+            } else {
+                ctx.fillText("Adjust the angle to make the rainbow clear!", 120, 270);
+            }
+        }
+    
+        angleSlider.addEventListener("input", e => {
+            drawPrism(parseInt(e.target.value));
+        });
+    
+        drawPrism(40);
+    }
+
     unitMatchingGame(container) {
         container.innerHTML = `
             <div class="game-area">
