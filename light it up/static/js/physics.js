@@ -155,7 +155,7 @@ class PhysicsPageManager {
             formulaData = this.formulas.electricity.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
         if (!formulaData && this.formulas.thermodynamics) {
-            formulaData = this.formulas.thermodynamics.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
+            formulaData = this.formulas.thermodynamics.find(f => f.name.toLowerCase() === "ideal gas law");
         }
 
         if (formulaData) {
@@ -236,6 +236,9 @@ class PhysicsPageManager {
             case 'thermodynamics':
                 this.thermodynamicsGame(gameContainer);
                 break;
+            case 'unit_of_measurement':
+                this.unitMatchingGame(gameContainer);
+                break;
             default:
                 // Fallback to Lottie animation or simple simulation
                 this.tryLoadLottie(container, concept.animation).then(loaded => {
@@ -248,6 +251,49 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    unitMatchingGame(container) {
+        container.innerHTML = `
+            <div class="game-area">
+              <h3>🎯 Match the Unit to Its Quantity!</h3>
+              <div style="display:flex;gap:15px;justify-content:center;">
+                <div draggable="true" class="unitCard" data-type="m">📏 meter (m)</div>
+                <div draggable="true" class="unitCard" data-type="kg">⚖️ kilogram (kg)</div>
+                <div draggable="true" class="unitCard" data-type="s">⏱️ second (s)</div>
+                <div draggable="true" class="unitCard" data-type="A">⚡ ampere (A)</div>
+              </div>
+              <div style="margin-top:15px;display:flex;gap:20px;justify-content:center;">
+                <div class="target" data-accept="m">Length</div>
+                <div class="target" data-accept="kg">Mass</div>
+                <div class="target" data-accept="s">Time</div>
+                <div class="target" data-accept="A">Electric Current</div>
+              </div>
+              <p id="matchFeedback" style="text-align:center;"></p>
+            </div>
+        `;
+    
+        let draggedItem = null;
+        container.querySelectorAll(".unitCard").forEach(card => {
+            card.style.border = "2px solid #fff";
+            card.style.padding = "10px";
+            card.style.cursor = "grab";
+            card.ondragstart = () => draggedItem = card;
+        });
+        container.querySelectorAll(".target").forEach(t => {
+            t.style.border = "2px dashed #fff";
+            t.style.padding = "15px";
+            t.ondragover = e => e.preventDefault();
+            t.ondrop = e => {
+                if (draggedItem.dataset.type === t.dataset.accept) {
+                    t.style.background = "#00e676";
+                    container.querySelector("#matchFeedback").textContent = "✅ Correct!";
+                } else {
+                    t.style.background = "#f44336";
+                    container.querySelector("#matchFeedback").textContent = "❌ Try again!";
+                }
+            };
+        });
+    }
+
     thermodynamicsGame(container) {
         container.innerHTML = `
             <div class="game-area" style="text-align:center;color:white;">
