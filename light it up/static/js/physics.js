@@ -82,7 +82,7 @@ class PhysicsPageManager {
             if (key.includes('energy')) iconClass = 'fa-bolt';
             if (key.includes('gravity')) iconClass = 'fa-parachute-box';
             if (key.includes('force')) iconClass = 'fa-gavel';
-            if (key.includes('momentum')) iconClass = 'fa-arrows-alt-h';
+            if (key.includes('momentum')) iconClass = 'fa-bowling-ball';
             if (key.includes('electric')) iconClass = 'fa-bolt';
             if (key.includes('centrifugal')) iconClass = 'fa-sync-alt';
             if (key.includes('thermodynamics')) iconClass = 'fa-thermometer-half';
@@ -147,8 +147,8 @@ class PhysicsPageManager {
 
         let formulaData = null;
 
-        if (this.formulas.motion && key === 'newtons_laws_of_motion') {
-            formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === "newton's second law");
+        if (this.formulas.motion && (key === 'momentum' || key === 'newtons_laws_of_motion')) {
+            formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         } else if (this.formulas.motion) {
             formulaData = this.formulas.motion.find(f => f.name.toLowerCase() === key.replace(/_/g, ' '));
         }
@@ -206,6 +206,9 @@ class PhysicsPageManager {
         container.appendChild(gameContainer);
 
         switch (key) {
+            case 'momentum':
+                this.momentumGame(gameContainer);
+                break;
             case 'longitudinal_wave':
                 this.longitudinalWaveGame(gameContainer);
                 break;
@@ -214,9 +217,6 @@ class PhysicsPageManager {
                 break;
             case 'motion':
                 this.motionGame(gameContainer);
-                break;
-            case 'momentum':
-                this.momentumGame(gameContainer);
                 break;
             case 'energy':
                 this.energyGame(gameContainer);
@@ -270,6 +270,104 @@ class PhysicsPageManager {
     }
 
     // ===== GAME IMPLEMENTATIONS =====
+    momentumGame(container) {
+        container.innerHTML = `
+            <div class="game-area" style="text-align:center;color:white;">
+                <h2>🎳 Bowling Ball Bonanza!</h2>
+                <p>Change the mass and velocity to see how it affects the collision!</p>
+                <label>Mass (kg):</label>
+                <input type="range" id="massSlider" min="1" max="10" value="5" style="width:200px;">
+                <span id="massVal">5</span><br>
+                <label>Velocity (m/s):</label>
+                <input type="range" id="velocitySlider" min="1" max="10" value="5" style="width:200px;">
+                <span id="velocityVal">5</span><br>
+                <canvas id="momentumCanvas" width="500" height="200" style="background:#0d1b2a;border-radius:10px;margin-top:10px;"></canvas>
+                <button id="resetBtn" class="btn btn-primary">Reset</button>
+            </div>
+        `;
+
+        const canvas = container.querySelector("#momentumCanvas");
+        const ctx = canvas.getContext("2d");
+        let ball = { x: 50, y: 150, radius: 20, vx: 5 };
+        let pins = [];
+
+        const massSlider = container.querySelector("#massSlider");
+        const velocitySlider = container.querySelector("#velocitySlider");
+        const massVal = container.querySelector("#massVal");
+        const velocityVal = container.querySelector("#velocityVal");
+        const resetBtn = container.querySelector("#resetBtn");
+
+        const setupPins = () => {
+            pins = [];
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j <= i; j++) {
+                    pins.push({ x: 400 + i * 30, y: 150 - (i * 15) + j * 30, vx: 0, vy: 0, radius: 10 });
+                }
+            }
+        };
+
+        massSlider.oninput = e => {
+            ball.radius = 10 + parseInt(e.target.value);
+            massVal.textContent = e.target.value;
+        };
+
+        velocitySlider.oninput = e => {
+            ball.vx = parseInt(e.target.value);
+            velocityVal.textContent = e.target.value;
+        };
+        
+        resetBtn.onclick = () => {
+            ball.x = 50;
+            setupPins();
+        };
+
+        const draw = () => {
+            if (!this.elements.contentGrid.contains(canvas)) {
+                if(this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+                return;
+            }
+
+            ctx.clearRect(0, 0, 500, 200);
+
+            // Move ball
+            ball.x += ball.vx;
+
+            // Draw ball
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "#ff5252";
+            ctx.fill();
+
+            // Draw and move pins
+            pins.forEach(pin => {
+                pin.x += pin.vx;
+                pin.y += pin.vy;
+
+                ctx.beginPath();
+                ctx.arc(pin.x, pin.y, pin.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "#fff";
+                ctx.fill();
+
+                // Collision detection
+                const dx = pin.x - ball.x;
+                const dy = pin.y - ball.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < ball.radius + pin.radius) {
+                    const angle = Math.atan2(dy, dx);
+                    const speed = Math.sqrt(ball.vx * ball.vx);
+                    pin.vx = Math.cos(angle) * speed * (ball.radius / 20);
+                    pin.vy = Math.sin(angle) * speed * (ball.radius / 20);
+                }
+            });
+
+            this.animationFrameId = requestAnimationFrame(draw);
+        };
+        
+        setupPins();
+        draw();
+    }
+
     longitudinalWaveGame(container) {
         container.innerHTML = `
             <div class="game-area" style="text-align:center;color:white;">
